@@ -1,0 +1,27 @@
+.avatarImage, .avatarInitials {
+    border-radius: 50%;
+    object-fit: cover;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatarInitials {
+    background: linear-gradient(to right, #10b981, #2563eb);
+}
+
+.small {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.large {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+    border: 3px solid #334155;
+}

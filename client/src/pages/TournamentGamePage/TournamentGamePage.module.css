@@ -1,0 +1,605 @@
+.container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 1px solid #475569;
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f59e0b, #fbbf24, #3b82f6);
+}
+
+.backButton {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+}
+
+.backButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(107, 114, 128, 0.4);
+}
+
+.header h1 {
+    color: white;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+    flex: 1;
+}
+
+.gameInfo {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.replayBadge {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-left: 1rem;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.playersInfo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 1px solid #475569;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    min-width: 180px;
+    position: relative;
+}
+
+.player.currentTurn {
+    border-color: #10b981;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.1));
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+}
+
+.player.currentTurn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #10b981, #3b82f6, #10b981);
+    border-radius: 18px;
+    z-index: -1;
+    animation: borderGlow 2s linear infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.playerName {
+    color: white;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-align: center;
+}
+
+.turnIndicator {
+    color: #10b981;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+    background: rgba(16, 185, 129, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+.vs {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gameBoard {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 1px solid #475569;
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.gameBoard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f59e0b, #fbbf24, #3b82f6, #10b981);
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: white;
+    gap: 2rem;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading p {
+    font-size: 1.25rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: white;
+    text-align: center;
+    gap: 2rem;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-radius: 20px;
+    margin: 2rem;
+    padding: 3rem;
+}
+
+.error h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.error p {
+    margin: 0;
+    font-size: 1.125rem;
+    opacity: 0.9;
+}
+
+.gameResultOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+}
+
+.gameResultModal {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+    animation: modalAppear 0.4s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.gameResultModal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #f59e0b, #fbbf24, #3b82f6, #10b981);
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.gameResultModal h2 {
+    margin: 0 0 1.5rem 0;
+    color: #1f2937;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.resultIcon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+    animation: bounce 0.6s ease-out;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px);
+    }
+    60% {
+        transform: translateY(-8px);
+    }
+}
+
+.winResult {
+    color: #059669;
+}
+
+.loseResult {
+    color: #dc2626;
+}
+
+.drawResult {
+    color: #7c3aed;
+}
+
+.winResult p, .loseResult p, .drawResult p {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.resultActions {
+    margin: 2rem 0 1rem 0;
+}
+
+.backToTournamentsButton {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 16px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.backToTournamentsButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(59, 130, 246, 0.4);
+}
+
+.autoRedirect {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+    font-style: italic;
+}
+
+.gameErrorMessage {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.errorContent {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tournamentStatus {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 1px solid #475569;
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.tournamentStatus::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.tournamentStatus h3 {
+    margin: 0 0 1rem 0;
+    color: #fbbf24;
+    font-size: 1.375rem;
+    font-weight: 700;
+}
+
+.tournamentStatus p {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.125rem;
+    color: white;
+    font-weight: 500;
+}
+
+.waitingMessage {
+    color: #10b981 !important;
+    font-weight: 700;
+    animation: pulse 2s infinite;
+    background: rgba(16, 185, 129, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.errorIcon {
+    font-size: 1.125rem;
+}
+
+.replayNotification {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    animation: slideDown 0.3s ease-out;
+}
+
+.replayContent {
+    background: linear-gradient(135deg, #f59e0b, #fbbf24);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: replayPulse 2s infinite;
+}
+
+.replayIcon {
+    font-size: 1.125rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes replayPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 12px 32px rgba(245, 158, 11, 0.6);
+    }
+}
+
+.tournamentResult {
+    text-align: center;
+    padding: 2rem;
+}
+
+.tournamentResult h3 {
+    margin: 1rem 0;
+    color: #1f2937;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.tournamentResult p {
+    margin: 0.75rem 0;
+    color: #4b5563;
+    font-size: 1.125rem;
+}
+
+.prizeInfo {
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: #059669;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin: 1.5rem 0;
+    border: 2px solid rgba(16, 185, 129, 0.3);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.winResult h3, .tournamentResult h3 {
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1.5rem;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .playersInfo {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .player {
+        min-width: 150px;
+        padding: 1rem 1.5rem;
+    }
+    
+    .gameBoard {
+        padding: 1rem;
+    }
+    
+    .gameResultModal {
+        padding: 2rem 1.5rem;
+        max-width: 90%;
+    }
+    
+    .tournamentStatus {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.25rem;
+    }
+    
+    .playerName {
+        font-size: 1rem;
+    }
+    
+    .gameBoard {
+        padding: 0.75rem;
+    }
+    
+    .gameResultModal {
+        padding: 1.5rem 1rem;
+    }
+    
+    .resultIcon {
+        font-size: 3rem;
+    }
+    
+    .gameResultModal h2 {
+        font-size: 1.5rem;
+    }
+    
+    .vs {
+        font-size: 1.25rem;
+    }
+}

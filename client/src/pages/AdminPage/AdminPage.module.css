@@ -1,0 +1,111 @@
+.pageContainer {
+    display: flex;
+    gap: 2rem;
+}
+
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid #334155;
+}
+
+.navButton {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: transparent;
+    color: #cbd5e1;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.navButton svg {
+    margin-right: 0.75rem;
+    width: 20px;
+    height: 20px;
+}
+.navButton:hover {
+    background-color: #334155;
+    color: white;
+}
+.navButton.active {
+    background-color: #2563eb;
+    color: white;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.content h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+.card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1.5rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.formInput, .formSelect {
+    background-color: #334155;
+    border: 1px solid #475569;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    outline: none;
+}
+.formInput:focus, .formSelect:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.formButton {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+    background-color: #2563eb;
+    color: white;
+    align-self: flex-start;
+}
+.formButton:hover {
+    background-color: #1d4ed8;
+}
+
+.message {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    color: white;
+}
+.success {
+    background-color: #166534;
+}
+.error {
+    background-color: #991b1b;
+}

@@ -1,0 +1,106 @@
+.card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #334155;
+}
+
+.table th {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+}
+
+.userCell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.username {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.email {
+    font-size: 0.875rem;
+    color: #64748b;
+}
+
+.roleBadge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.roleAdmin {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+
+.roleUser {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.actionButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: #64748b;
+}
+.actionButton:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}

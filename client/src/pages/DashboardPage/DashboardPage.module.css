@@ -1,0 +1,241 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+}
+.header p {
+    color: #94a3b8;
+}
+
+.ratingWidget {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.ratingWidgetText {
+    text-align: right;
+}
+.ratingWidgetText p:first-child {
+    font-size: 0.875rem;
+    color: #94a3b8;
+}
+.ratingWidgetText p:last-child {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #60a5fa;
+}
+.ratingWidgetIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: linear-gradient(to right, #2563eb, #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ratingWidgetIcon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.statCard {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.statCardInfo p:first-child {
+    font-size: 0.875rem;
+    color: #94a3b8;
+}
+.statCardInfo p:last-child {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+.statCardIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.statCardIcon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: white;
+}
+
+.layoutGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+@media (min-width: 1024px) {
+    .layoutGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 500px) {
+    .header {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .headerFirst {
+        width: 100%;
+    }
+
+    .ratingWidget {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+.contentBox {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.boxHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+.boxHeader h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+}
+.boxHeader a {
+    color: #60a5fa;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+.boxHeader a:hover {
+    color: #93c5fd;
+}
+
+.itemList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.gameItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #334155;
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+.gameItemInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.gameItemAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(to right, #2563eb, #3b82f6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+.gameItemText p:first-child {
+    font-weight: 500;
+    color: white;
+}
+.gameItemText p:last-child {
+    font-size: 0.875rem;
+    color: #94a3b8;
+}
+.gameItemResult {
+    text-align: right;
+}
+.gameItemResult p {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+}
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badgeGreen {
+    background-color: rgba(34, 197, 94, 0.2);
+    color: #86efac;
+}
+.badgeRed {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+}
+
+.tournamentItem {
+    display: block;
+    text-decoration: none;
+    padding: 1rem;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+.tournamentItem:hover {
+    background-color: #334155;
+}
+.tournamentItemHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+.tournamentItemHeader h3 {
+    font-weight: 500;
+    color: white;
+}
+.tournamentItemHeader span {
+    font-weight: 700;
+    color: #4ade80;
+}
+.tournamentItemFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    color: #94a3b8;
+}
+.tournamentItemFooter div {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}

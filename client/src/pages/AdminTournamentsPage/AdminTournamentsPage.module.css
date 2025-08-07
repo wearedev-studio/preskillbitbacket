@@ -1,0 +1,529 @@
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.headerActions {
+    display: flex;
+    gap: 15px;
+}
+
+.refreshButton, .createButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.refreshButton {
+    background: #6b7280;
+    color: white;
+}
+
+.refreshButton:hover {
+    background: #4b5563;
+    transform: translateY(-1px);
+}
+
+.createButton {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.createButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.filters {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filterGroup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filterGroup label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.filterSelect {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+    cursor: pointer;
+}
+
+.filterSelect:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+    font-size: 18px;
+}
+
+.error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.retryButton {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.retryButton:hover {
+    background: #b91c1c;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.emptyState h3 {
+    margin: 0 0 10px 0;
+    color: #374151;
+    font-size: 20px;
+}
+
+.emptyState p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.tournamentsList {
+    display: grid;
+    gap: 20px;
+}
+
+.tournamentCard {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.tournamentCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.tournamentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.tournamentHeader h3 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status.waiting {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.status.active {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.status.finished {
+    background: #e0e7ff;
+    color: #3730a3;
+}
+
+.status.cancelled {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.tournamentInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.infoItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.label {
+    font-weight: 600;
+    color: #374151;
+}
+
+.prizeDistribution {
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.prizeDistribution h4 {
+    margin: 0 0 10px 0;
+    color: #374151;
+    font-size: 16px;
+}
+
+.prizes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.prize {
+    background: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.participantsList {
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+}
+
+.participantsList h4 {
+    margin: 0 0 10px 0;
+    color: #374151;
+    font-size: 16px;
+}
+
+.participants {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.participant {
+    background: white;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    border: 1px solid #e5e7eb;
+}
+
+.participant.bot {
+    background: #fef3c7;
+    border-color: #fbbf24;
+    color: #d97706;
+}
+
+.winner {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Модальное окно */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modalContent {
+    background: white;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.modalHeader h2 {
+    margin: 0;
+    color: #1f2937;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.createForm {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.formGroup label {
+    font-weight: 600;
+    color: #374151;
+    font-size: 14px;
+}
+
+.formGroup input,
+.formGroup select {
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.prizePreview {
+    background: #f0f9ff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #bae6fd;
+}
+
+.prizePreview h4 {
+    margin: 0 0 10px 0;
+    color: #0c4a6e;
+    font-size: 14px;
+}
+
+.previewPrizes {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 13px;
+    color: #0369a1;
+}
+
+.formActions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cancelButton,
+.submitButton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancelButton {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.cancelButton:hover {
+    background: #e5e7eb;
+}
+
+.submitButton {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+}
+
+.submitButton:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.submitButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .headerActions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .infoGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .prizes {
+        grid-template-columns: 1fr;
+    }
+    
+    .formActions {
+        flex-direction: column;
+    }
+    
+    .modal {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 24px;
+    }
+    
+    .tournamentCard {
+        padding: 15px;
+    }
+    
+    .tournamentHeader {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .participants {
+        flex-direction: column;
+    }
+}

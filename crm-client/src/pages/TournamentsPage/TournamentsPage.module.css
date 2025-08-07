@@ -1,0 +1,125 @@
+.card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #334155;
+}
+
+.table th {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+    font-size: 0.875rem;
+}
+
+.nameCell {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.actionButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: #64748b;
+}
+.actionButton:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+}
+
+.deleteButton {
+    color: #ef4444;
+}
+.deleteButton:hover {
+    background-color: #fee2e2;
+}
+
+.createForm {
+    background-color: #f1f5f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.formRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+.formLabel {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #475569;
+}
+.formInput, .formSelect {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    outline: none;
+}
+.formActions {
+    display: flex;
+    gap: 1rem;
+}
+.btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+}
+.btnPrimary {
+    background-color: #2563eb;
+    color: white;
+}
+.btnSecondary {
+    background-color: #e2e8f0;
+    color: #334155;
+}

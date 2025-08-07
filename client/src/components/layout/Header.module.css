@@ -1,0 +1,82 @@
+.header {
+    background-color: #1e293b; 
+    border-bottom: 1px solid #334155; 
+    height: 4rem; 
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menuButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: #94a3b8;
+}
+.menuButton:hover {
+    background-color: #334155;
+    color: #f1f5f9;
+}
+
+.rightSection {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.onlineIndicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.onlineDot {
+    width: 0.75rem;
+    height: 0.75rem;
+    background-color: #22c55e;
+    border-radius: 50%;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.balance {
+    background-color: rgba(22, 163, 74, 0.2);
+    color: #4ade80;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.notificationBell {
+    position: relative;
+    color: #94a3b8;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+.notificationBell:hover {
+    color: white;
+}
+.notificationCount {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background: red;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+}

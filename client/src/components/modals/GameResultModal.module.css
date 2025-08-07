@@ -1,0 +1,286 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+    position: relative;
+}
+
+.header {
+    padding: 24px 24px 16px;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.icon {
+    font-size: 3rem;
+    margin-bottom: 8px;
+    animation: bounce 0.6s ease-out;
+}
+
+.title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.closeButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6b7280;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.content {
+    padding: 16px 24px;
+    text-align: center;
+}
+
+.message {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.footer {
+    padding: 16px 24px 24px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.countdown {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.countdown p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.countdownNumber {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    min-width: 100px;
+}
+
+.primaryButton {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.primaryButton:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.secondaryButton {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.secondaryButton:hover {
+    background-color: #e5e7eb;
+    transform: translateY(-1px);
+}
+
+/* Стили для разных результатов */
+.winResult .header {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border-bottom: none;
+}
+
+.winResult .title {
+    color: white;
+}
+
+.winResult .closeButton {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.winResult .closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.loseResult .header {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border-bottom: none;
+}
+
+.loseResult .title {
+    color: white;
+}
+
+.loseResult .closeButton {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.loseResult .closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.drawResult .header {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border-bottom: none;
+}
+
+.drawResult .title {
+    color: white;
+}
+
+.drawResult .closeButton {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.drawResult .closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.defaultResult .header {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+    border-bottom: none;
+}
+
+.defaultResult .title {
+    color: white;
+}
+
+.defaultResult .closeButton {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.defaultResult .closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px) scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .modal {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .header {
+        padding: 20px 20px 12px;
+    }
+    
+    .content {
+        padding: 12px 20px;
+    }
+    
+    .footer {
+        padding: 12px 20px 20px;
+    }
+    
+    .actions {
+        flex-direction: column;
+    }
+    
+    .button {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .icon {
+        font-size: 2.5rem;
+    }
+    
+    .title {
+        font-size: 1.3rem;
+    }
+}

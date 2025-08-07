@@ -1,0 +1,61 @@
+.layoutContainer {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 256px;
+    background-color: #1a2238;
+    color: #a9b3c6;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.sidebarHeader {
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+    border-bottom: 1px solid #2a344d;
+}
+
+.sidebarNav {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #a9b3c6;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.navLink:hover {
+    background-color: #2a344d;
+    color: white;
+}
+
+.navLink.active {
+    background-color: #2563eb;
+    color: white;
+}
+
+.navLink svg {
+    margin-right: 0.75rem;
+    width: 20px;
+    height: 20px;
+}
+
+.mainContent {
+    flex-grow: 1;
+    background-color: #f1f5f9;
+    padding: 2rem;
+}

@@ -1,0 +1,95 @@
+/* === Navbar Styles === */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 10;
+}
+
+nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #4ade80, #22d3ee);
+  z-index: 2;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #f8fafc;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #4ade80;
+}
+
+.balance {
+  color: #4ade80;
+  font-weight: bold;
+}
+
+.username {
+  color: #cbd5e1;
+}
+
+.notifications {
+  position: relative;
+  text-decoration: none;
+  color: #f8fafc;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.notifications:hover {
+  color: #38bdf8;
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: #ef4444;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.logout-button {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #dc2626;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

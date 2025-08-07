@@ -1,0 +1,143 @@
+.sidebarContainer {
+    position: fixed;
+    inset-y: 0;
+    left: 0;
+    z-index: 50;
+    width: 16rem;
+    background-color: #1e293b;
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+}
+
+.logoArea {
+    height: 4.5rem;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid #334155;
+    text-decoration: none;
+}
+.logoIconContainer {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to right, #2563eb, #3b82f6);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.logoText h1 {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white;
+    line-height: 1.2;
+}
+.logoText p {
+    font-size: 0.875rem;
+    color: #64748b;
+    line-height: 1.2;
+}
+
+.nav {
+    flex-grow: 1;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav {
+    flex-grow: 1;
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+}
+.navLink:hover {
+    background-color: #334155;
+    color: white;
+}
+.navLink.active {
+    background-color: #2563eb;
+    color: white;
+}
+.navLink svg {
+    margin-right: 0.75rem;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.profileSection {
+    padding: 1rem;
+    border-top: 1px solid #334155;
+}
+
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(to right, #10b981, #2563eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+.username {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+}
+.userStatus {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.sidebarContainer.open {
+    transform: translateX(0);
+}
+
+.mobileOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+}
+
+@media (min-width: 1024px) {
+
+    .mobileOverlay {
+        display: none;
+    }
+}

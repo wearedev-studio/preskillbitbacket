@@ -1,0 +1,142 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+    border: 1px solid #475569;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #475569;
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+}
+
+.header h3 {
+    margin: 0;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.content {
+    padding: 1.5rem;
+    color: #e2e8f0;
+    line-height: 1.6;
+}
+
+.content p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #475569;
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.okButton {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+}
+
+.okButton:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.okButton:active {
+    transform: translateY(0);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+    .modal {
+        width: 95%;
+        margin: 1rem;
+    }
+    
+    .header {
+        padding: 1rem;
+    }
+    
+    .content {
+        padding: 1rem;
+    }
+    
+    .footer {
+        padding: 1rem;
+    }
+}

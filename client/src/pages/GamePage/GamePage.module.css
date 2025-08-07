@@ -1,0 +1,147 @@
+.pageContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    color: #94a3b8;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+.backButton:hover {
+    color: white;
+}
+
+.gameHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gameIcon {
+    width: 60px;
+    height: 60px;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.gameHeader h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+}
+
+.card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.cardPadding {
+    padding: 1.5rem;
+}
+
+.gameInfoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.gameInfoItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.gameInfoIcon {
+    font-size: 1.5rem;
+}
+
+.gameInfoContent p:first-child {
+    color: #94a3b8;
+}
+
+.gameInfoContent p:last-child {
+    font-weight: 600;
+    color: white;
+}
+
+.statusMessage {
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.statusWaiting {
+    background-color: #fffbeb;
+}
+.statusTurn {
+    background-color: #f0fdf4;
+}
+.statusOpponentTurn {
+    background-color: #eff6ff;
+}
+.statusGameEnd {
+    background-color: #f8fafc;
+}
+
+.statusIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.statusTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+.statusTitleWaiting { color: #a16207; }
+.statusTitleMyTurn { color: #15803d; }
+.statusTitleOpponentTurn { color: #1d4ed8; }
+.statusTitleEnd { color: #1e293b; }
+
+
+.statusCountdown p {
+    color: #4b5563;
+    margin-bottom: 0.5rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+.btnPrimary {
+    background-color: #2563eb;
+    color: white;
+}
+.btnPrimary:hover {
+    background-color: #1d4ed8;
+}
+.btnDanger {
+    background-color: #dc2626;
+    color: white;
+}
+.btnDanger:hover {
+    background-color: #b91c1c;
+}

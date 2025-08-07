@@ -1,0 +1,95 @@
+.pageContainer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #334155;
+}
+
+.headerIcon {
+    font-size: 2.25rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+}
+
+.notificationList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.notificationItem {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: background-color 0.2s;
+}
+
+.notificationItem.unread {
+    border-left: 4px solid #60a5fa;
+}
+
+.notificationItem.read {
+    border-left: 4px solid #475569;
+    opacity: 0.7;
+}
+
+.notificationItem:hover {
+    background-color: #334155;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.title {
+    font-weight: 600;
+    color: white;
+    margin: 0;
+}
+
+.message {
+    margin: 0.5rem 0;
+    color: #cbd5e1;
+}
+
+.date {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 3rem;
+    background-color: #1e293b;
+    border-radius: 12px;
+    border: 1px solid #334155;
+}
+
+.emptyStateIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #475569;
+}
+
+.emptyState h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #94a3b8;
+}
+
+.emptyState p {
+    color: #64748b;
+}

@@ -1,0 +1,88 @@
+.card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.refreshButton {
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+}
+.refreshButton:hover {
+    background-color: #e2e8f0;
+}
+.refreshButton svg {
+    transition: transform 0.5s;
+}
+.refreshButton.loading svg {
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #334155;
+}
+
+.table th {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+    font-size: 0.875rem;
+}
+
+.actions {
+    display: flex;
+}
+
+.deleteButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    color: #ef4444;
+}
+.deleteButton:hover {
+    background-color: #fee2e2;
+}

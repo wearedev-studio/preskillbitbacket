@@ -1,0 +1,24 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-size: cover;
+    background-position: center;
+    background-image: url('/auth-bg.jpg'); 
+}
+
+.cardWrapper {
+    width: 100%;
+    max-width: 28rem;
+}
+
+.card {
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(16px);
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid #334155;
+    padding: 2rem;
+}

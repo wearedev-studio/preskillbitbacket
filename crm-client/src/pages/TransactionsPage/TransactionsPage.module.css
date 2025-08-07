@@ -1,0 +1,67 @@
+.card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.tableContainer {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    color: #334155;
+}
+
+.table th {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table td {
+    padding: 1rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+    font-size: 0.875rem;
+}
+
+.userCell {
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.amount {
+    font-weight: 600;
+}
+
+.typeBadge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+    text-transform: capitalize;
+}
+.type_DEPOSIT { background-color: #dcfce7; color: #166534; }
+.type_WITHDRAWAL { background-color: #ffedd5; color: #9a3412; }
+.type_WAGER_WIN { background-color: #dcfce7; color: #166534; }
+.type_WAGER_LOSS { background-color: #fee2e2; color: #991b1b; }
+.type_TOURNAMENT_FEE { background-color: #fee2e2; color: #991b1b; }
+.type_TOURNAMENT_WINNINGS { background-color: #dcfce7; color: #166534; }

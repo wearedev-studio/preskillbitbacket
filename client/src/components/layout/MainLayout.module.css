@@ -1,0 +1,10 @@
+.contentContainer {
+    transition: margin-left 0.3s ease-in-out;
+    margin-left: 0;
+}
+
+@media (min-width: 1024px) {
+    .contentContainer.sidebarOpen {
+        margin-left: 16rem;
+    }
+}

@@ -1,0 +1,94 @@
+.authHeader {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: anchor-center;
+}
+
+.authTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+}
+
+.authSubtitle {
+    color: #94a3b8;
+    margin-top: 0.5rem;
+}
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.formLabel {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #94a3b8;
+}
+
+.formInput {
+    background-color: #1e293b;
+    border: 1px solid #475569;
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    outline: none;
+}
+
+.formInput:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.alertError {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    text-align: center;
+    font-size: 0.875rem;
+    border: 1px solid #b91c1c;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.btnPrimary {
+    background-color: #2563eb;
+    color: white;
+}
+
+.btnPrimary:hover:not(:disabled) {
+    background-color: #1d4ed8;
+}
+
+.logoIconContainer {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to right, #2563eb, #3b82f6);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logoText {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
