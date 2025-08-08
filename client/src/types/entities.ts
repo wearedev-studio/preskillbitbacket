@@ -1,8 +1,8 @@
-export type GameType = 'Chess' | 'Checkers' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino' | 'Dice';
+export type GameType = 'Chess' | 'Checkers' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino' | 'Dice' | 'Bingo';
 
 export interface IGameRecord {
   _id: string;
-  gameName: 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino' | 'Dice';
+  gameName: 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino' | 'Dice' | 'Bingo';
   status: 'WON' | 'LOST' | 'DRAW';
   amountChanged: number;
   opponent: string;

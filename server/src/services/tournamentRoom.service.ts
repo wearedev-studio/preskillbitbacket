@@ -277,7 +277,8 @@ export async function processTournamentMove(
         const isBot = player.isBot;
         console.log(`[TournamentRoom] Player ${player.username} is bot: ${isBot}, current turn: ${room.gameState.turn}`);
         
-        if (!isBot && room.gameState.turn) {
+        // Skip turn check for bingo - any player can make moves
+        if (!isBot && room.gameState.turn && room.gameType !== 'bingo') {
             const currentTurn = room.gameState.turn.toString();
             const playerIdStr = playerId.toString();
             

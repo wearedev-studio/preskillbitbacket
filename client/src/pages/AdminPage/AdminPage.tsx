@@ -70,6 +70,7 @@ const AdminPage: React.FC = () => {
                                     <option value="checkers">Checkers</option>
                                     <option value="tic-tac-toe">Tic Tac Toe</option>
                                     <option value="backgammon">Backgammon</option>
+                                    <option value="bingo">Bingo</option>
                                     <option value="durak">Durak</option>
                                     <option value="domino">Domino</option>
                                     <option value="dice">Dice</option>
@@ -99,6 +100,7 @@ const AdminPage: React.FC = () => {
                                     <option value="checkers">Checkers</option>
                                     <option value="chess">Chess</option>
                                     <option value="backgammon">Backgammon</option>
+                                    <option value="bingo">Bingo</option>
                                     <option value="durak">Durak</option>
                                     <option value="domino">Domino</option>
                                     <option value="dice">Dice</option>

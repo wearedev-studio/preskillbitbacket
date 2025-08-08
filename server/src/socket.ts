@@ -11,8 +11,10 @@ import { backgammonLogic, rollDiceForBackgammon } from './games/backgammon.logic
 import { durakLogic } from './games/durak.logic';
 import { dominoLogic } from './games/domino.logic';
 import { DiceGameLogic } from './games/dice.logic';
+import { BingoGameLogic } from './games/bingo.logic';
 
 const diceLogic = new DiceGameLogic();
+const bingoLogic = new BingoGameLogic();
 import {
     advanceTournamentWinner,
     handleTournamentPlayerLeft,
@@ -32,7 +34,7 @@ interface Player {
 
 export interface Room {
     id: string;
-    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino' | 'dice';
+    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino' | 'dice' | 'bingo';
     bet: number;
     players: Player[];
     gameState: GameState;
@@ -57,7 +59,8 @@ export const gameLogics: Record<Room['gameType'], IGameLogic> = {
     'backgammon': backgammonLogic,
     'durak': durakLogic,
     'domino': dominoLogic,
-    'dice': diceLogic
+    'dice': diceLogic,
+    'bingo': bingoLogic
 };
 
 const BOT_WAIT_TIME = 15000;
@@ -83,7 +86,7 @@ function getPublicRoomState(room: Room) {
     return publicState;
 }
 
-function formatGameNameForDB(gameType: string): 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino' | 'Dice' {
+function formatGameNameForDB(gameType: string): 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino' | 'Dice' | 'Bingo' {
     switch (gameType) {
         case 'tic-tac-toe': return 'Tic-Tac-Toe';
         case 'checkers': return 'Checkers';
@@ -92,6 +95,7 @@ function formatGameNameForDB(gameType: string): 'Checkers' | 'Chess' | 'Backgamm
         case 'durak': return 'Durak';
         case 'domino': return 'Domino';
         case 'dice': return 'Dice';
+        case 'bingo': return 'Bingo';
         default: return 'Tic-Tac-Toe';
     }
 }
@@ -274,8 +278,8 @@ async function processBotMoveInRegularGame(
                 break;
             }
 
-            // For dice game, add delay between moves and check if bot should continue
-            if (currentRoom.gameType === 'dice') {
+            // For dice and bingo games, add delay between moves and check if bot should continue
+            if (currentRoom.gameType === 'dice' || currentRoom.gameType === 'bingo') {
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
                 // Check if bot is still in SELECTING phase after SELECT_DICE move
@@ -288,6 +292,15 @@ async function processBotMoveInRegularGame(
                     // Bot should continue to select more dice if needed
                     botCanMove = true;
                     console.log('[Bot] Continuing to select more dice');
+                }
+                
+                // For bingo, check if bot should continue in marking phase
+                if (currentRoom.gameType === 'bingo') {
+                    const bingoState = currentRoom.gameState as any;
+                    if (bingoState.gamePhase === 'MARKING' && bingoState.currentPlayer === botPlayerIndex) {
+                        botCanMove = true;
+                        console.log('[Bot] Continuing bingo marking phase');
+                    }
                 }
             }
         }
@@ -464,8 +477,8 @@ export const initializeSocket = (io: Server) => {
                     room.gameState = gameLogic.createInitialState(room.players);
                     io.to(roomId).emit('gameStart', getPublicRoomState(room));
                     
-                    // Check if bot should start first in domino or dice
-                    if (room.gameType === 'domino' || room.gameType === 'dice') {
+                    // Check if bot should start first in domino, dice, or bingo
+                    if (room.gameType === 'domino' || room.gameType === 'dice' || room.gameType === 'bingo') {
                         const botPlayer = room.players.find(p => isBot(p));
                         if (botPlayer && room.gameState.turn === (botPlayer.user._id as any).toString()) {
                             setTimeout(() => {
@@ -507,8 +520,8 @@ export const initializeSocket = (io: Server) => {
                         currentRoom.gameState = gameLogic.createInitialState(currentRoom.players);
                         io.to(roomId).emit('gameStart', getPublicRoomState(currentRoom));
                         
-                        // Check if bot should start first in domino or dice
-                        if (currentRoom.gameType === 'domino' || currentRoom.gameType === 'dice') {
+                        // Check if bot should start first in domino, dice, or bingo
+                        if (currentRoom.gameType === 'domino' || currentRoom.gameType === 'dice' || currentRoom.gameType === 'bingo') {
                             const botPlayer = currentRoom.players.find(p => isBot(p));
                             if (botPlayer && currentRoom.gameState.turn === (botPlayer.user._id as any).toString()) {
                                 setTimeout(() => {
@@ -527,8 +540,8 @@ export const initializeSocket = (io: Server) => {
                 room.gameState = gameLogic.createInitialState(room.players);
                 io.to(roomId).emit('gameStart', getPublicRoomState(room));
                 
-                // Check if bot should start first in domino or dice
-                if (room.gameType === 'domino' || room.gameType === 'dice') {
+                // Check if bot should start first in domino, dice, or bingo
+                if (room.gameType === 'domino' || room.gameType === 'dice' || room.gameType === 'bingo') {
                     const botPlayer = room.players.find(p => isBot(p));
                     if (botPlayer && room.gameState.turn === (botPlayer.user._id as any).toString()) {
                         setTimeout(() => {

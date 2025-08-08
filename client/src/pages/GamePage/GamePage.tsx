@@ -10,6 +10,7 @@ import BackgammonBoard from '../../components/game/BackgammonBoard';
 import DurakBoard from '../../components/game/DurakBoard';
 import DominoBoard from '../../components/game/DominoBoard';
 import DiceBoard from '../../components/game/DiceBoard';
+import BingoBoard from '../../components/game/BingoBoard';
 import ErrorModal from '../../components/modals/ErrorModal';
 import GameResultModal from '../../components/modals/GameResultModal';
 import { Chess } from 'chess.js';
@@ -40,6 +41,7 @@ const getGameIcon = (gameType: string = ''): string => {
         case 'durak': return '🃏';
         case 'domino': return '🀫';
         case 'dice': return '🎯';
+        case 'bingo': return '🎱';
         default: return '🎮';
     }
 }
@@ -322,6 +324,22 @@ const GamePage: React.FC = () => {
                 );
                 return (
                     <DiceBoard
+                        // @ts-ignore
+                        gameState={roomState.gameState}
+                        onMove={(move) => handleMove(move)}
+                        isMyTurn={isMyTurn}
+                        isGameFinished={!!gameMessage}
+                        myPlayerIndex={myPlayerIndex as 0 | 1}
+                    />
+                );
+            case 'bingo':
+                if (myPlayerIndex === -1) return (
+                    <div className="alert alert-error">
+                        <p>Error: You are not a player in this room.</p>
+                    </div>
+                );
+                return (
+                    <BingoBoard
                         // @ts-ignore
                         gameState={roomState.gameState}
                         onMove={(move) => handleMove(move)}
