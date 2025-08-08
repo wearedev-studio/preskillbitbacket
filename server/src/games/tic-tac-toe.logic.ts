@@ -30,29 +30,29 @@ export const ticTacToeLogic: IGameLogic = {
 
         if (gameState.turn && gameState.turn.toString() !== playerId.toString()) {
             console.log(`[TicTacToe] Turn check failed: expected ${gameState.turn}, got ${playerId}`);
-            return { newState: gameState, error: "Сейчас не ваш ход.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Not your turn.", turnShouldSwitch: false };
         }
 
         if (!move || typeof move.cellIndex !== 'number') {
             console.log(`[TicTacToe] Invalid move format:`, move);
-            return { newState: gameState, error: "Неверный формат хода.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Invalid move format.", turnShouldSwitch: false };
         }
 
         if (move.cellIndex < 0 || move.cellIndex > 8) {
             console.log(`[TicTacToe] Cell index out of bounds: ${move.cellIndex}`);
-            return { newState: gameState, error: "Недопустимый индекс клетки.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Invalid cell index.", turnShouldSwitch: false };
         }
 
         if (gameState.board[move.cellIndex] !== null) {
             console.log(`[TicTacToe] Cell already occupied: ${move.cellIndex}`);
-            return { newState: gameState, error: "Клетка уже занята.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Cell already occupied.", turnShouldSwitch: false };
         }
 
         // @ts-ignore
         const playerIndex = players.findIndex(p => p.user._id.toString() === playerId.toString());
         if (playerIndex === -1) {
             console.log(`[TicTacToe] Player not found in players list`);
-            return { newState: gameState, error: "Игрок не найден.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Player not found.", turnShouldSwitch: false };
         }
 
         const playerSymbol = playerIndex === 0 ? 'X' : 'O';
@@ -65,7 +65,7 @@ export const ticTacToeLogic: IGameLogic = {
         const nextPlayer = players.find(p => p.user._id.toString() !== playerId.toString());
         if (!nextPlayer) {
             console.log(`[TicTacToe] Next player not found`);
-            return { newState: gameState, error: "Следующий игрок не найден.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Next player not found.", turnShouldSwitch: false };
         }
 
         const newGameState = { 

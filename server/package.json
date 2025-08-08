@@ -13,6 +13,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@types/axios": "^0.9.36",
+    "axios": "^1.11.0",
     "bcryptjs": "^3.0.2",
     "chess.js": "^1.4.0",
     "cors": "^2.8.5",

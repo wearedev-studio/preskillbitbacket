@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
   return (
     <nav style={navStyle}>
       <div>
-        <Link to="/" style={linkStyle}>Главная</Link>
+        <Link to="/" style={linkStyle}>Home</Link>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         {isAuthenticated && user ? (
@@ -71,15 +71,15 @@ const Navbar: React.FC = () => {
                     </span>
                 )}
             </Link>
-            <button onClick={handleLogout}>Log out</button>
+            <button onClick={handleLogout}>Logout</button>
             {user?.role === 'ADMIN' && (
-              <Link to="/admin" style={{...linkStyle, marginLeft: '1rem' }}>Admin panel</Link>
+              <Link to="/admin" style={{...linkStyle, marginLeft: '1rem' }}>Admin Panel</Link>
             )}
           </>
         ) : (
           <>
-            <Link to="/login" style={linkStyle}>Log In</Link>
-            <Link to="/register" style={linkStyle}>Sign Up</Link>
+            <Link to="/login" style={linkStyle}>Login</Link>
+            <Link to="/register" style={linkStyle}>Register</Link>
           </>
         )}
       </div>

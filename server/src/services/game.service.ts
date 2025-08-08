@@ -268,7 +268,7 @@ export class GameService {
                 bet: r.bet, 
                 host: r.players.length > 0 
                     ? r.players[0] 
-                    : { user: { username: 'Ожидание игрока' } } 
+                    : { user: { username: 'Waiting for player' } }
             }));
         
         this.io.to(`lobby-${gameType}`).emit('roomsList', availableRooms);
@@ -305,7 +305,7 @@ export class GameService {
             this.broadcastLobbyState(room.gameType);
         } else {
             this.io.to(remainingPlayer.socketId).emit('opponentDisconnected', { 
-                message: `Противник отключился. Ожидание переподключения (60 сек)...` 
+                message: `Opponent disconnected. Waiting for reconnection (60 sec)...`
             });
             
             room.disconnectTimer = setTimeout(async () => {

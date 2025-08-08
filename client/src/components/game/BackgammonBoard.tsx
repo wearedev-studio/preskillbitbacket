@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import styles from './BackgammonBoard.module.css';
 
-// Типы для нард
+// Types for backgammon
 type PlayerColor = 'white' | 'black';
 
 interface BackgammonPiece {
@@ -326,10 +326,10 @@ const BackgammonBoard: React.FC<BackgammonBoardProps> = ({
             <div className={styles.gameInfo}>
                 <div className={styles.playerInfo}>
                     <div className={styles.playerName}>
-                        {myPlayerIndex === 0 ? 'Вы' : 'Противник'}
+                        {myPlayerIndex === 0 ? 'You' : 'Opponent'}
                     </div>
                     <div className={styles.playerColor}>
-                        Белые (ходят первыми)
+                        White (moves first)
                     </div>
                 </div>
 
@@ -340,7 +340,7 @@ const BackgammonBoard: React.FC<BackgammonBoardProps> = ({
                             className={styles.rollButton}
                             disabled={isRollingDice}
                         >
-                            {isRollingDice ? 'Бросаем...' : 'Бросить кости'}
+                            {isRollingDice ? 'Rolling...' : 'Roll Dice'}
                         </button>
                     )}
                     {renderDice()}
@@ -348,10 +348,10 @@ const BackgammonBoard: React.FC<BackgammonBoardProps> = ({
 
                 <div className={styles.playerInfo}>
                     <div className={styles.playerName}>
-                        {myPlayerIndex === 1 ? 'Вы' : 'Противник'}
+                        {myPlayerIndex === 1 ? 'You' : 'Opponent'}
                     </div>
                     <div className={styles.playerColor}>
-                        Черные
+                        Black
                     </div>
                 </div>
             </div>
@@ -381,7 +381,7 @@ const BackgammonBoard: React.FC<BackgammonBoardProps> = ({
 
                     <div className={styles.middleBar}>
                         <span style={{ color: '#e2e8f0', fontWeight: 'bold', fontSize: 'clamp(10px, 2vw, 14px)' }}>
-                            БАР
+                            BAR
                         </span>
                     </div>
 
@@ -412,7 +412,7 @@ const BackgammonBoard: React.FC<BackgammonBoardProps> = ({
                     className={styles.bearOffZone}
                     onClick={handleBearOffClick}
                 >
-                    <div className={styles.bearOffLabel}>ВЫВОД</div>
+                    <div className={styles.bearOffLabel}>BEAR OFF</div>
                     <div className={styles.bearOffPieces}>
                         {gameState.home.white.map((piece, index) => renderPiece(piece, index, -2))}
                     </div>
@@ -427,19 +427,19 @@ const BackgammonBoard: React.FC<BackgammonBoardProps> = ({
                 isMyTurn ? styles.myTurn : styles.opponentTurn
             }`}>
                 {isGameFinished ? (
-                    <span>Игра завершена</span>
+                    <span>Game Finished</span>
                 ) : isMyTurn ? (
                     gameState.turnPhase === 'ROLLING' ? 
-                        <span>🎲 Ваш ход - бросьте кости</span> :
-                        <span>🟢 Ваш ход - делайте ходы</span>
+                        <span>🎲 Your Turn - Roll Dice</span> :
+                        <span>🟢 Your Turn - Make Moves</span>
                 ) : (
-                    <span>🟡 Ход противника</span>
+                    <span>🟡 Opponent's Turn</span>
                 )}
             </div>
 
             {gameState.moveHistory && gameState.moveHistory.length > 0 && (
                 <div className={styles.moveHistory}>
-                    <strong>История ходов:</strong> {gameState.moveHistory.length} ходов
+                    <strong>Move History:</strong> {gameState.moveHistory.length} moves
                 </div>
             )}
         </div>

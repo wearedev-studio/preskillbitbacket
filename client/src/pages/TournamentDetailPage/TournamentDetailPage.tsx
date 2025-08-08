@@ -17,17 +17,19 @@ const TournamentDetailPage: React.FC = () => {
     const navigate = useNavigate();
 
     const statusText = {
-        WAITING: 'Ожидание игроков',
-        ACTIVE: 'Активный',
-        FINISHED: 'Завершен',
-        CANCELLED: 'Отменен'
+        WAITING: 'Waiting for players',
+        ACTIVE: 'Active',
+        FINISHED: 'Finished',
+        CANCELLED: 'Cancelled'
     };
 
     const gameTypeText = {
-        'tic-tac-toe': 'Крестики-нолики',
-        'checkers': 'Шашки',
-        'chess': 'Шахматы',
-        'backgammon': 'Нарды'
+        'tic-tac-toe': 'Tic-Tac-Toe',
+        'checkers': 'Checkers',
+        'chess': 'Chess',
+        'backgammon': 'Backgammon',
+        'bingo': 'Bingo',
+        'domino': 'Domino'
     };
 
     useEffect(() => {
@@ -94,7 +96,7 @@ const TournamentDetailPage: React.FC = () => {
 
     const handleMatchReady = (data: { tournamentId: string; matchId: string; gameType: string }) => {
         if (data.tournamentId === tournamentId) {
-            // Автоматически переходим к турнирной игре
+            // Automatically navigate to tournament game
             navigate(`/tournament-game/${data.matchId}`);
         }
     };
@@ -127,7 +129,7 @@ const TournamentDetailPage: React.FC = () => {
 
     const renderBracket = () => {
         if (!tournament || tournament.bracket.length === 0) {
-            return <div className={styles.noBracket}>Турнирная сетка еще не создана</div>;
+            return <div className={styles.noBracket}>Tournament bracket not yet created</div>;
         }
 
         return (
@@ -166,22 +168,22 @@ const TournamentDetailPage: React.FC = () => {
                                     <div className={styles.matchStatus}>
                                         {match.status === 'FINISHED' && match.winner && (
                                             <span className={styles.matchWinner}>
-                                                🏆 {match.winner.username} побеждает!
+                                                🏆 {match.winner.username} wins!
                                             </span>
                                         )}
                                         {match.status === 'ACTIVE' && (
                                             <span className={styles.matchActive}>
-                                                🔥 Матч в процессе
+                                                🔥 Match in progress
                                             </span>
                                         )}
                                         {match.status === 'PENDING' && (
                                             <span className={styles.matchPending}>
-                                                ⏳ Ожидание начала
+                                                ⏳ Waiting to start
                                             </span>
                                         )}
                                         {match.status === 'WAITING' && (
                                             <span className={styles.matchPending}>
-                                                ⏸️ Ожидание игроков
+                                                ⏸️ Waiting for players
                                             </span>
                                         )}
                                     </div>
@@ -204,21 +206,21 @@ const TournamentDetailPage: React.FC = () => {
 
         return (
             <div className={styles.currentMatch}>
-                <h3>Ваш текущий матч</h3>
+                <h3>Your Current Match</h3>
                 <div className={styles.matchInfo}>
                     <div className={styles.opponent}>
-                        Противник: {opponent.username}
+                        Opponent: {opponent.username}
                         {opponent.isBot && ' 🤖'}
                     </div>
                     <div className={styles.matchStatusInfo}>
-                        Статус: {currentMatch.status === 'ACTIVE' ? 'Игра идет' : 'Ожидание'}
+                        Status: {currentMatch.status === 'ACTIVE' ? 'Game in progress' : 'Waiting'}
                     </div>
                     {currentMatch.status === 'ACTIVE' && (
                         <button 
                             onClick={() => navigate(`/tournament-game/${currentMatch.matchId}`)}
                             className={styles.joinGameButton}
                         >
-                            Перейти к игре
+                            Go to Game
                         </button>
                     )}
                 </div>
@@ -229,7 +231,7 @@ const TournamentDetailPage: React.FC = () => {
     const formatTimeUntilStart = (time: number): string => {
         if (time <= 0) return '';
         const seconds = Math.ceil(time / 1000);
-        return `Старт через ${seconds} секунд`;
+        return `Starting in ${seconds} seconds`;
     };
 
     const isPlayerRegistered = (): boolean => {
@@ -247,7 +249,7 @@ const TournamentDetailPage: React.FC = () => {
     if (loading) {
         return (
             <div className={styles.container}>
-                <div className={styles.loading}>Загрузка турнира...</div>
+                <div className={styles.loading}>Loading tournament...</div>
             </div>
         );
     }
@@ -256,9 +258,9 @@ const TournamentDetailPage: React.FC = () => {
         return (
             <div className={styles.container}>
                 <div className={styles.error}>
-                    Ошибка: {error}
+                    Error: {error}
                     <button onClick={loadTournament} className={styles.retryButton}>
-                        Попробовать снова
+                        Try Again
                     </button>
                 </div>
             </div>
@@ -268,7 +270,7 @@ const TournamentDetailPage: React.FC = () => {
     if (!tournament) {
         return (
             <div className={styles.container}>
-                <div className={styles.error}>Турнир не найден</div>
+                <div className={styles.error}>Tournament not found</div>
             </div>
         );
     }
@@ -279,7 +281,7 @@ const TournamentDetailPage: React.FC = () => {
         <div className={styles.container}>
             <div className={styles.header}>
                 <button onClick={() => navigate('/tournaments')} className={styles.backButton}>
-                    ← Назад к турнирам
+                    ← Back to Tournaments
                 </button>
                 <h1>{tournament.name}</h1>
                 <span className={`${styles.status} ${styles[tournament.status.toLowerCase()]}`}>
@@ -290,34 +292,34 @@ const TournamentDetailPage: React.FC = () => {
             <div className={styles.tournamentInfo}>
                 <div className={styles.infoGrid}>
                     <div className={styles.infoItem}>
-                        <span className={styles.label}>Игра:</span>
+                        <span className={styles.label}>Game:</span>
                         <span>{gameTypeText[tournament.gameType]}</span>
                     </div>
                     <div className={styles.infoItem}>
-                        <span className={styles.label}>Взнос:</span>
-                        <span>{tournament.entryFee} монет</span>
+                        <span className={styles.label}>Entry Fee:</span>
+                        <span>{tournament.entryFee} coins</span>
                     </div>
                     <div className={styles.infoItem}>
-                        <span className={styles.label}>Призовой фонд:</span>
-                        <span>{tournament.prizePool} монет</span>
+                        <span className={styles.label}>Prize Pool:</span>
+                        <span>{tournament.prizePool} coins</span>
                     </div>
                     <div className={styles.infoItem}>
-                        <span className={styles.label}>Игроки:</span>
+                        <span className={styles.label}>Players:</span>
                         <span>{tournament.players.length}/{tournament.maxPlayers}</span>
                     </div>
                     <div className={styles.infoItem}>
-                        <span className={styles.label}>Комиссия платформы:</span>
+                        <span className={styles.label}>Platform Commission:</span>
                         <span>{tournament.platformCommission}%</span>
                     </div>
                     {tournament.startedAt && (
                         <div className={styles.infoItem}>
-                            <span className={styles.label}>Начат:</span>
+                            <span className={styles.label}>Started:</span>
                             <span>{new Date(tournament.startedAt).toLocaleString()}</span>
                         </div>
                     )}
                     {tournament.finishedAt && (
                         <div className={styles.infoItem}>
-                            <span className={styles.label}>Завершен:</span>
+                            <span className={styles.label}>Finished:</span>
                             <span>{new Date(tournament.finishedAt).toLocaleString()}</span>
                         </div>
                     )}
@@ -331,45 +333,45 @@ const TournamentDetailPage: React.FC = () => {
 
                 {tournament.status === 'FINISHED' && tournament.winner && (
                     <div className={styles.winner}>
-                        🏆 Победитель: {tournament.winner.username}
+                        🏆 Winner: {tournament.winner.username}
                         {tournament.winner.isBot && ' 🤖'}
                     </div>
                 )}
 
                 {prizePlace && (
                     <div className={styles.playerPrize}>
-                        🏅 Ваше место: {prizePlace}
+                        🏅 Your Place: {prizePlace}
                     </div>
                 )}
             </div>
 
-            {/* Призовой фонд и распределение */}
+            {/* Prize pool and distribution */}
             {tournament.prizePool > 0 && (
                 <div className={styles.prizeSection}>
-                    <h3>💰 Призовой фонд: {tournament.prizePool} монет</h3>
+                    <h3>💰 Prize Pool: {tournament.prizePool} coins</h3>
                     <div className={styles.prizeDistribution}>
                         <div className={styles.prizeItem}>
-                            <span className={styles.prizePlace}>🥇 1 место</span>
+                            <span className={styles.prizePlace}>🥇 1st place</span>
                             <span className={styles.prizeAmount}>
-                                {Math.floor(tournament.prizePool * 0.6)} монет (60%)
+                                {Math.floor(tournament.prizePool * 0.6)} coins (60%)
                             </span>
                         </div>
                         <div className={styles.prizeItem}>
-                            <span className={styles.prizePlace}>🥈 2 место</span>
+                            <span className={styles.prizePlace}>🥈 2nd place</span>
                             <span className={styles.prizeAmount}>
-                                {Math.floor(tournament.prizePool * 0.3)} монет (30%)
+                                {Math.floor(tournament.prizePool * 0.3)} coins (30%)
                             </span>
                         </div>
                         <div className={styles.prizeItem}>
-                            <span className={styles.prizePlace}>🥉 3-4 место</span>
+                            <span className={styles.prizePlace}>🥉 3rd-4th place</span>
                             <span className={styles.prizeAmount}>
-                                {Math.floor(tournament.prizePool * 0.05)} монет (5% каждому)
+                                {Math.floor(tournament.prizePool * 0.05)} coins (5% each)
                             </span>
                         </div>
                         <div className={styles.prizeItem}>
-                            <span className={styles.prizePlace}>💼 Комиссия платформы</span>
+                            <span className={styles.prizePlace}>💼 Platform Commission</span>
                             <span className={styles.prizeAmount}>
-                                {Math.floor(tournament.prizePool * (tournament.platformCommission / 100))} монет ({tournament.platformCommission}%)
+                                {Math.floor(tournament.prizePool * (tournament.platformCommission / 100))} coins ({tournament.platformCommission}%)
                             </span>
                         </div>
                     </div>
@@ -384,14 +386,14 @@ const TournamentDetailPage: React.FC = () => {
                                 onClick={handleUnregister}
                                 className={styles.unregisterButton}
                             >
-                                Отменить регистрацию
+                                Cancel Registration
                             </button>
                         ) : canPlayerRegister() ? (
                             <button 
                                 onClick={handleRegister}
                                 className={styles.registerButton}
                             >
-                                Зарегистрироваться
+                                Register
                             </button>
                         ) : (
                             <button 
@@ -399,8 +401,8 @@ const TournamentDetailPage: React.FC = () => {
                                 className={styles.disabledButton}
                             >
                                 {tournament.players.length >= tournament.maxPlayers 
-                                    ? 'Турнир заполнен' 
-                                    : 'Недостаточно средств'
+                                    ? 'Tournament is full'
+                                    : 'Insufficient funds'
                                 }
                             </button>
                         )}
@@ -411,7 +413,7 @@ const TournamentDetailPage: React.FC = () => {
             {renderPlayerCurrentMatch()}
 
             <div className={styles.participants}>
-                <h3>Участники ({tournament.players.length}/{tournament.maxPlayers})</h3>
+                <h3>Participants ({tournament.players.length}/{tournament.maxPlayers})</h3>
                 <div className={styles.playersList}>
                     {tournament.players.map((player, index) => (
                         <div key={player._id} className={styles.participant}>
@@ -419,7 +421,7 @@ const TournamentDetailPage: React.FC = () => {
                             <span className={styles.playerName}>
                                 {player.username}
                                 {player.isBot && ' 🤖'}
-                                {user && player._id === user._id && ' (Вы)'}
+                                {user && player._id === user._id && ' (You)'}
                             </span>
                             <span className={styles.registrationTime}>
                                 {new Date(player.registeredAt).toLocaleString()}
@@ -430,7 +432,7 @@ const TournamentDetailPage: React.FC = () => {
             </div>
 
             <div className={styles.bracketSection}>
-                <h3>Турнирная сетка</h3>
+                <h3>Tournament Bracket</h3>
                 {renderBracket()}
             </div>
         </div>

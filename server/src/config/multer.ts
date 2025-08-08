@@ -21,7 +21,7 @@ const fileFilter = (req: any, file: any, cb: any) => {
     if (file.mimetype.startsWith('image')) {
         cb(null, true);
     } else {
-        cb(new Error('Неверный тип файла, разрешены только изображения!'), false);
+        cb(new Error('Invalid file type, only images allowed!'), false);
     }
 };
 

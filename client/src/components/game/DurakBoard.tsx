@@ -398,27 +398,27 @@ const DurakBoard: React.FC<DurakBoardProps> = ({
 
     const getGameStatusText = useCallback(() => {
         if (isGameFinished) {
-            return 'Game finished';
+            return 'Game Finished';
         }
         
         if (gameState.phase === 'ATTACKING') {
             if (isMyAttack) {
                 if (gameState.table && gameState.table.length === 0) {
-                    return '⚔️ Your turn - Click a card to attack!';
+                    return '⚔️ Your Turn - Click a card to attack!';
                 } else {
-                    return '⚔️ Your turn - Attack with more cards or Pass';
+                    return '⚔️ Your Turn - Attack with more cards or Pass';
                 }
             } else {
-                return '⏳ Opponent is attacking...';
+                return '⏳ Opponent is Attacking...';
             }
         } else if (gameState.phase === 'DEFENDING') {
             if (isMyDefense) {
-                return '🛡️ Your turn - Drag cards to defend or click Take Cards';
+                return '🛡️ Your Turn - Drag cards to defend or click Take Cards';
             } else {
-                return '⏳ Opponent is defending...';
+                return '⏳ Opponent is Defending...';
             }
         } else if (gameState.phase === 'DRAWING') {
-            return '🃏 Drawing cards...';
+            return '🃏 Drawing Cards...';
         }
         
         return '⏳ Waiting...';
@@ -529,7 +529,7 @@ const DurakBoard: React.FC<DurakBoardProps> = ({
                     </div>
                     <div className={styles.deckInfo}>
                         <div className={styles.deckCount}>{trumpInfoMemo.deckCount}</div>
-                        <div className={styles.deckLabel}>Cards left</div>
+                        <div className={styles.deckLabel}>Cards Left</div>
                     </div>
                 </div>
 

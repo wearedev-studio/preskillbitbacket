@@ -97,7 +97,7 @@ const TournamentGamePage: React.FC = () => {
     } = useTournamentExitWarning(
         true,
         matchId,
-        gameData?.gameType ? gameTypeText[gameData.gameType as keyof typeof gameTypeText] : 'Турнирная игра'
+        gameData?.gameType ? gameTypeText[gameData.gameType as keyof typeof gameTypeText] : 'Tournament Game'
     );
 
     useEffect(() => {
@@ -118,7 +118,7 @@ const TournamentGamePage: React.FC = () => {
 
     useEffect(() => {
         if (!currentMatchId || !socket || !user) {
-            setError('Недостаточно данных для подключения к игре');
+            setError('Insufficient data to connect to game');
             setLoading(false);
             return;
         }
@@ -274,7 +274,7 @@ const TournamentGamePage: React.FC = () => {
         setError(error.message);
         setLoading(false);
         
-        if (error.message.includes('завершен') || error.message.includes('finished')) {
+        if (error.message.includes('finished') || error.message.includes('завершен')) {
             setTimeout(() => {
                 navigate('/tournaments');
             }, 3000);
@@ -470,36 +470,36 @@ const TournamentGamePage: React.FC = () => {
         return (
             <div className={styles.gameResultOverlay}>
                 <div className={styles.gameResultModal}>
-                    <h2>Матч завершен!</h2>
+                    <h2>Match Completed!</h2>
                     
                     {isDraw ? (
                         <div className={styles.drawResult}>
                             <span className={styles.resultIcon}>🤝</span>
-                            <p>Ничья!</p>
+                            <p>Draw!</p>
                         </div>
                     ) : isWinner ? (
                         <div className={styles.winResult}>
                             <span className={styles.resultIcon}>🏆</span>
-                            <p>Поздравляем! Вы победили!</p>
+                            <p>Congratulations! You won!</p>
                         </div>
                     ) : (
                         <div className={styles.loseResult}>
                             <span className={styles.resultIcon}>😔</span>
-                            <p>Вы проиграли</p>
+                            <p>You lost</p>
                             {gameResult.winner && (
-                                <p>Победитель: {gameResult.winner.username}</p>
+                                <p>Winner: {gameResult.winner.username}</p>
                             )}
                         </div>
                     )}
 
                     {matchResult && (
                         <div className={styles.tournamentStatus}>
-                            <h3>Статус в турнире:</h3>
+                            <h3>Tournament Status:</h3>
                             <p>{matchResult.message}</p>
                             
                             {matchResult.type === 'ADVANCED' && (
                                 <p className={styles.waitingMessage}>
-                                    Ожидание следующего раунда...
+                                    Waiting for next round...
                                 </p>
                             )}
                             
@@ -509,7 +509,7 @@ const TournamentGamePage: React.FC = () => {
                                         onClick={() => navigate('/tournaments')}
                                         className={styles.backToTournamentsButton}
                                     >
-                                        Вернуться к турнирам
+                                        Return to Tournaments
                                     </button>
                                 </div>
                             )}
@@ -518,7 +518,7 @@ const TournamentGamePage: React.FC = () => {
 
                     {matchResult?.type === 'ELIMINATED' && (
                         <p className={styles.autoRedirect}>
-                            Автоматический переход через 5 секунд...
+                            Automatic redirect in 5 seconds...
                         </p>
                     )}
                 </div>
@@ -532,23 +532,23 @@ const TournamentGamePage: React.FC = () => {
         return (
             <div className={styles.gameResultOverlay}>
                 <div className={styles.gameResultModal}>
-                    <h2>🏆 Турнир завершен!</h2>
+                    <h2>🏆 Tournament Completed!</h2>
                     
                     {tournamentCompleted.isWinner ? (
                         <div className={styles.winResult}>
                             <span className={styles.resultIcon}>🥇</span>
-                            <h3>Поздравляем с победой!</h3>
-                            <p>Вы выиграли турнир "{tournamentCompleted.tournamentName}"!</p>
+                            <h3>Congratulations on your victory!</h3>
+                            <p>You won tournament "{tournamentCompleted.tournamentName}"!</p>
                             <p className={styles.prizeInfo}>
-                                Ваш приз: {Math.floor(tournamentCompleted.prizePool * 0.6)} монет
+                                Your prize: {Math.floor(tournamentCompleted.prizePool * 0.6)} coins
                             </p>
                         </div>
                     ) : (
                         <div className={styles.tournamentResult}>
                             <span className={styles.resultIcon}>🏁</span>
-                            <h3>Турнир завершен</h3>
-                            <p>Турнир "{tournamentCompleted.tournamentName}" завершен</p>
-                            <p>Победитель: {tournamentCompleted.winner}</p>
+                            <h3>Tournament Completed</h3>
+                            <p>Tournament "{tournamentCompleted.tournamentName}" completed</p>
+                            <p>Winner: {tournamentCompleted.winner}</p>
                         </div>
                     )}
 
@@ -557,12 +557,12 @@ const TournamentGamePage: React.FC = () => {
                             onClick={() => navigate('/tournaments')}
                             className={styles.backToTournamentsButton}
                         >
-                            Вернуться к турнирам
+                            Return to Tournaments
                         </button>
                     </div>
 
                     <p className={styles.autoRedirect}>
-                        Автоматический переход через 10 секунд...
+                        Automatic redirect in 10 seconds...
                     </p>
                 </div>
             </div>
@@ -574,7 +574,7 @@ const TournamentGamePage: React.FC = () => {
             <div className={styles.container}>
                 <div className={styles.loading}>
                     <div className={styles.spinner}></div>
-                    <p>Подключение к турнирной игре...</p>
+                    <p>Connecting to tournament game...</p>
                 </div>
             </div>
         );
@@ -584,13 +584,13 @@ const TournamentGamePage: React.FC = () => {
         return (
             <div className={styles.container}>
                 <div className={styles.error}>
-                    <h2>Ошибка подключения</h2>
+                    <h2>Connection Error</h2>
                     <p>{error}</p>
                     <button 
                         onClick={() => navigate('/tournaments')}
                         className={styles.backButton}
                     >
-                        Вернуться к турнирам
+                        Return to Tournaments
                     </button>
                 </div>
             </div>
@@ -601,13 +601,13 @@ const TournamentGamePage: React.FC = () => {
         return (
             <div className={styles.container}>
                 <div className={styles.error}>
-                    <h2>Игра не найдена</h2>
-                    <p>Турнирный матч не найден или недоступен</p>
+                    <h2>Game Not Found</h2>
+                    <p>Tournament match not found or unavailable</p>
                     <button 
                         onClick={() => navigate('/tournaments')}
                         className={styles.backButton}
                     >
-                        Вернуться к турнирам
+                        Return to Tournaments
                     </button>
                 </div>
             </div>
@@ -639,14 +639,14 @@ const TournamentGamePage: React.FC = () => {
                     }}
                     className={styles.backButton}
                 >
-                    ← Турниры
+                    ← Tournaments
                 </button>
-                <h1>Турнирный матч</h1>
+                <h1>Tournament Match</h1>
                 <div className={styles.gameInfo}>
                     {gameTypeText[gameData.gameType as keyof typeof gameTypeText]}
                     {gameData.isReplay && (
                         <span className={styles.replayBadge}>
-                            Переигровка {gameData.replayNumber}/3
+                            Replay {gameData.replayNumber}/3
                         </span>
                     )}
                 </div>
@@ -655,9 +655,9 @@ const TournamentGamePage: React.FC = () => {
             <div className={styles.playersInfo}>
                 <div className={`${styles.player} ${isMyTurn ? styles.currentTurn : ''}`}>
                     <div className={styles.playerName}>
-                        {user?.username} (Вы)
+                        {user?.username} (You)
                     </div>
-                    {isMyTurn && <div className={styles.turnIndicator}>Ваш ход</div>}
+                    {isMyTurn && <div className={styles.turnIndicator}>Your Turn</div>}
                 </div>
 
                 <div className={styles.vs}>VS</div>
@@ -667,7 +667,7 @@ const TournamentGamePage: React.FC = () => {
                         {opponent?.username}
                         {opponent?.isBot && ' 🤖'}
                     </div>
-                    {!isMyTurn && <div className={styles.turnIndicator}>Ход противника</div>}
+                    {!isMyTurn && <div className={styles.turnIndicator}>Opponent's Turn</div>}
                 </div>
             </div>
 

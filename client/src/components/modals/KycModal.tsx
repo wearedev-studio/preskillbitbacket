@@ -44,7 +44,7 @@ const KycModal: React.FC<KycModalProps> = ({ isOpen, onClose, onSuccess }) => {
                 onClose();
             }, 2000);
         } catch (error: any) {
-            setMessage({ type: 'error', text: error.response?.data?.message || 'Error loading' });
+            setMessage({ type: 'error', text: error.response?.data?.message || 'Upload error' });
         } finally {
             setIsLoading(false);
         }
@@ -58,7 +58,7 @@ const KycModal: React.FC<KycModalProps> = ({ isOpen, onClose, onSuccess }) => {
                 <div className={styles.header}>
                     <div style={{display: 'flex', alignItems: 'center', gap: '0.75rem'}}>
                         <ShieldCheck />
-                        <h2>Account verification</h2>
+                        <h2>Account Verification</h2>
                     </div>
                     <button onClick={onClose} className={styles.closeButton}><X /></button>
                 </div>
@@ -67,12 +67,12 @@ const KycModal: React.FC<KycModalProps> = ({ isOpen, onClose, onSuccess }) => {
                 </p>
                 <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label className={styles.formLabel}>Document type</label>
+                        <label className={styles.formLabel}>Document Type</label>
                         <select value={kycDocType} onChange={(e) => setKycDocType(e.target.value)} className={styles.formInput}>
                             <option value="PASSPORT">Passport</option>
                             <option value="UTILITY_BILL">Utility bill</option>
                             <option value="INTERNATIONAL_PASSPORT">International passport</option>
-                            <option value="RESIDENCE_PERMIT">Registration</option>
+                            <option value="RESIDENCE_PERMIT">Residence Permit</option>
                         </select>
                     </div>
                     <div className={styles.formGroup}>
@@ -80,7 +80,7 @@ const KycModal: React.FC<KycModalProps> = ({ isOpen, onClose, onSuccess }) => {
                         <input type="file" accept="image/*,.pdf" onChange={handleFileChange} className={styles.formInput} required />
                     </div>
                     <button type="submit" disabled={isLoading} className={`${styles.btn} ${styles.btnPrimary}`}>
-                        {isLoading ? 'Sending...' : 'Submit for review'}
+                        {isLoading ? 'Sending...' : 'Submit for Review'}
                     </button>
                     {message.text && <p style={{color: message.type === 'error' ? 'salmon' : 'lightgreen', marginTop: '1rem'}}>{message.text}</p>}
                 </form>

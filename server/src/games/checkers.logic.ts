@@ -122,19 +122,19 @@ export const checkersLogic: IGameLogic = {
 
      processMove(gameState: CheckersState, move: CheckersMove, playerId: string, players: Room['players']) {
         if (gameState.turn !== playerId) {
-            return { newState: gameState, error: "Сейчас не ваш ход.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Not your turn.", turnShouldSwitch: false };
         }
         // @ts-ignore
         const playerIndex = players.findIndex(p => p.user._id.toString() === playerId) as 0 | 1;
         const legalMoves = getAllLegalMoves(gameState.board, playerIndex);
 
         if (gameState.mustCaptureWith !== null && move.from !== gameState.mustCaptureWith) {
-             return { newState: gameState, error: "Вы должны продолжить взятие той же шашкой.", turnShouldSwitch: false };
+             return { newState: gameState, error: "You must continue capturing with the same piece.", turnShouldSwitch: false };
         }
         
         const isMoveLegal = legalMoves.some(m => m.from === move.from && m.to === move.to);
         if (!isMoveLegal) {
-            return { newState: gameState, error: "Недопустимый ход. Возможно, вы должны совершить взятие.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Invalid move. You may need to make a capture.", turnShouldSwitch: false };
         }
 
         const { from, to } = move;

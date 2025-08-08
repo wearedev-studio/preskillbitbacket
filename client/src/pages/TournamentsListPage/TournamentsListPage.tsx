@@ -10,7 +10,7 @@ const TournamentsListPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<'all' | 'waiting' | 'active' | 'finished' | 'cancelled'>('all');
-    const [gameTypeFilter, setGameTypeFilter] = useState<'all' | 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino' | 'dice'>('all');
+    const [gameTypeFilter, setGameTypeFilter] = useState<'all' | 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino' | 'dice' | 'bingo'>('all');
     
     const { user } = useAuth();
     const { socket } = useSocket();
@@ -30,7 +30,8 @@ const TournamentsListPage: React.FC = () => {
         'backgammon': 'Backgammon',
         'durak': 'Durak',
         'domino': 'Domino',
-        'dice': 'Dice'
+        'dice': 'Dice',
+        'bingo': 'Bingo'
     };
 
     useEffect(() => {
@@ -118,7 +119,7 @@ const TournamentsListPage: React.FC = () => {
         if (timeLeft <= 0) return '';
         
         const seconds = Math.ceil(timeLeft / 1000);
-        return `Старт через ${seconds}с`;
+        return `Starting in ${seconds}s`;
     };
 
     const isPlayerRegistered = (tournament: Tournament): boolean => {
@@ -194,6 +195,7 @@ const TournamentsListPage: React.FC = () => {
                         <option value="durak">Durak</option>
                         <option value="domino">Domino</option>
                         <option value="dice">Dice</option>
+                        <option value="bingo">Bingo</option>
                     </select>
                 </div>
             </div>

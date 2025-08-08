@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,
     port: 5174,
     allowedHosts: [
-      'crmsklgames.koltech.dev' // Добавь сюда свой домен
+      'crmsklgames.koltech.dev' // Add your domain here
     ]
   }
 })

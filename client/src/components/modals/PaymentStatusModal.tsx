@@ -62,7 +62,7 @@ const PaymentStatusModal: React.FC<PaymentStatusModalProps> = ({
                     {amount && operation && status === 'success' && (
                         <div className={styles.amountInfo}>
                             <div className={styles.operationType}>
-                                {operation === 'deposit' ? '💰 Пополнение' : '💸 Вывод'}
+                                {operation === 'deposit' ? '💰 Deposit' : '💸 Withdrawal'}
                             </div>
                             <div className={styles.amount}>
                                 {operation === 'deposit' ? '+' : '-'}${amount.toFixed(2)}
@@ -77,7 +77,7 @@ const PaymentStatusModal: React.FC<PaymentStatusModalProps> = ({
                             onClick={onClose} 
                             className={styles.closeButton}
                         >
-                            Закрыть
+                            Close
                         </button>
                     </div>
                 )}
@@ -85,7 +85,7 @@ const PaymentStatusModal: React.FC<PaymentStatusModalProps> = ({
                 {status === 'loading' && (
                     <div className={styles.loadingSpinner}>
                         <div className={styles.spinner}></div>
-                        <p>Обработка платежа...</p>
+                        <p>Processing payment...</p>
                     </div>
                 )}
             </div>

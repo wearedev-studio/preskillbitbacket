@@ -76,7 +76,7 @@ function broadcastLobbyState(io: Server, gameType: Room['gameType']) {
         .filter(room => room.gameType === gameType && room.players.length < 2)
         .map(r => ({ id: r.id, bet: r.bet, host: r.players.length > 0
                 ? r.players[0]
-                : { user: { username: 'Ожидание игрока' } } }));
+                : { user: { username: 'Waiting for player' } } }));
     
     io.to(`lobby-${gameType}`).emit('roomsList', availableRooms);
 }
@@ -352,7 +352,7 @@ export const initializeSocket = (io: Server) => {
             playerInRoom.socketId = socket.id;
             
             socket.join(previousRoom.id);
-            io.to(previousRoom.id).emit('playerReconnected', { message: `Игрок ${initialUser.username} вернулся в игру!` });
+            io.to(previousRoom.id).emit('playerReconnected', { message: `Player ${initialUser.username} returned to the game!` });
             io.to(previousRoom.id).emit('gameUpdate', getPublicRoomState(previousRoom));
         }
 
@@ -454,11 +454,11 @@ export const initializeSocket = (io: Server) => {
 
         socket.on('createRoom', async ({ gameType, bet }: { gameType: Room['gameType'], bet: number }) => {
             const gameLogic = gameLogics[gameType];
-            if (!gameLogic || !gameLogic.createInitialState) return socket.emit('error', { message: "Игра недоступна." });
+            if (!gameLogic || !gameLogic.createInitialState) return socket.emit('error', { message: "Game unavailable." });
             
             const currentUser = await User.findById(initialUser._id);
-            if (!currentUser) return socket.emit('error', { message: "Пользователь не найден." });
-            if (currentUser.balance < bet) return socket.emit('error', { message: 'Недостаточно средств.' });
+            if (!currentUser) return socket.emit('error', { message: "User not found." });
+            if (currentUser.balance < bet) return socket.emit('error', { message: 'Insufficient funds.' });
 
             const roomId = `room-${socket.id}`;
             const players: Player[] = [{ socketId: socket.id, user: currentUser }];
@@ -495,13 +495,13 @@ export const initializeSocket = (io: Server) => {
             const currentUser = await User.findById(initialUser._id);
 
             if (!currentUser || !room) {
-                return socket.emit('error', { message: 'Комната не найдена или пользователь не существует.' });
+                return socket.emit('error', { message: 'Room not found or user does not exist.' });
             }
             if (room.players.length >= 2) {
-                return socket.emit('error', { message: 'Комната уже заполнена.' });
+                return socket.emit('error', { message: 'Room is already full.' });
             }
             if (currentUser.balance < room.bet) {
-                return socket.emit('error', { message: 'Недостаточно средств для присоединения.' });
+                return socket.emit('error', { message: 'Insufficient funds to join.' });
             }
 
             const gameLogic = gameLogics[room.gameType];
@@ -560,13 +560,13 @@ export const initializeSocket = (io: Server) => {
             const currentPlayerId = initialUser._id.toString();
 
             if (!room) {
-                return socket.emit('error', { message: 'Комната не найдена' });
+                return socket.emit('error', { message: 'Room not found' });
             }
             if (room.players.length < 2) {
-                return socket.emit('error', { message: 'Дождитесь второго игрока' });
+                return socket.emit('error', { message: 'Wait for the second player' });
             }
             if (room.gameState.turn !== currentPlayerId) {
-                return socket.emit('error', { message: 'Сейчас не ваш ход' });
+                return socket.emit('error', { message: 'Not your turn' });
             }
 
             const gameLogic = gameLogics[room.gameType];
@@ -635,7 +635,7 @@ export const initializeSocket = (io: Server) => {
                 delete rooms[roomId];
                 broadcastLobbyState(io, room.gameType);
             } else {
-                io.to(remainingPlayer.socketId).emit('opponentDisconnected', { message: `Противник отключился. Ожидание переподключения (60 сек)...` });
+                io.to(remainingPlayer.socketId).emit('opponentDisconnected', { message: `Opponent disconnected. Waiting for reconnection (60 sec)...` });
                 room.disconnectTimer = setTimeout(() => {
                     // @ts-ignore
                     endGame(io, room, remainingPlayer.user._id.toString());

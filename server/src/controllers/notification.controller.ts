@@ -6,15 +6,15 @@ export const getMyNotifications = async (req: Request, res: Response) => {
         const notifications = await Notification.find({ user: req.user!._id }).sort({ createdAt: -1 });
         res.json(notifications);
     } catch (error) {
-        res.status(500).json({ message: 'Ошибка сервера' });
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
 export const markNotificationsAsRead = async (req: Request, res: Response) => {
     try {
         await Notification.updateMany({ user: req.user!._id, isRead: false }, { isRead: true });
-        res.json({ message: 'Уведомления отмечены как прочитанные' });
+        res.json({ message: 'Notifications marked as read' });
     } catch (error) {
-        res.status(500).json({ message: 'Ошибка сервера' });
+        res.status(500).json({ message: 'Server error' });
     }
 };

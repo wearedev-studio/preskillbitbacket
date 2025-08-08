@@ -6,7 +6,7 @@ import styles from './AdminTournamentsPage.module.css';
 
 interface CreateTournamentForm {
     name: string;
-    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon';
+    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'bingo' | 'domino';
     maxPlayers: 4 | 8 | 16 | 32;
     entryFee: number;
     platformCommission: number;
@@ -32,17 +32,19 @@ const AdminTournamentsPage: React.FC = () => {
     const { socket } = useSocket();
 
     const statusText = {
-        WAITING: 'Ожидание игроков',
-        ACTIVE: 'Активный',
-        FINISHED: 'Завершен',
-        CANCELLED: 'Отменен'
+        WAITING: 'Waiting for players',
+        ACTIVE: 'Active',
+        FINISHED: 'Finished',
+        CANCELLED: 'Cancelled'
     };
 
     const gameTypeText = {
-        'tic-tac-toe': 'Крестики-нолики',
-        'checkers': 'Шашки',
-        'chess': 'Шахматы',
-        'backgammon': 'Нарды'
+        'tic-tac-toe': 'Tic-Tac-Toe',
+        'checkers': 'Checkers',
+        'chess': 'Chess',
+        'backgammon': 'Backgammon',
+        'bingo': 'Bingo',
+        'domino': 'Domino'
     };
 
     useEffect(() => {
@@ -95,7 +97,7 @@ const AdminTournamentsPage: React.FC = () => {
         e.preventDefault();
         
         if (!createForm.name.trim()) {
-            alert('Введите название турнира');
+            alert('Enter tournament name');
             return;
         }
 
@@ -123,7 +125,7 @@ const AdminTournamentsPage: React.FC = () => {
             await loadTournaments();
             
         } catch (err: any) {
-            alert(`Ошибка создания турнира: ${err.message}`);
+            alert(`Tournament creation error: ${err.message}`);
         } finally {
             setCreateLoading(false);
         }
@@ -147,7 +149,7 @@ const AdminTournamentsPage: React.FC = () => {
     if (loading) {
         return (
             <div className={styles.container}>
-                <div className={styles.loading}>Загрузка турниров...</div>
+                <div className={styles.loading}>Loading tournaments...</div>
             </div>
         );
     }
@@ -155,45 +157,45 @@ const AdminTournamentsPage: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1>Управление турнирами</h1>
+                <h1>Tournament Management</h1>
                 <div className={styles.headerActions}>
                     <button 
                         onClick={loadTournaments} 
                         className={styles.refreshButton}
                         disabled={loading}
                     >
-                        🔄 Обновить
+                        🔄 Refresh
                     </button>
                     <button 
                         onClick={() => setShowCreateForm(true)}
                         className={styles.createButton}
                     >
-                        ➕ Создать турнир
+                        ➕ Create Tournament
                     </button>
                 </div>
             </div>
 
             <div className={styles.filters}>
                 <div className={styles.filterGroup}>
-                    <label>Статус:</label>
+                    <label>Status:</label>
                     <select 
                         value={filter} 
                         onChange={(e) => setFilter(e.target.value as any)}
                         className={styles.filterSelect}
                     >
-                        <option value="all">Все</option>
-                        <option value="waiting">Ожидание</option>
-                        <option value="active">Активные</option>
-                        <option value="finished">Завершенные</option>
+                        <option value="all">All</option>
+                        <option value="waiting">Waiting</option>
+                        <option value="active">Active</option>
+                        <option value="finished">Finished</option>
                     </select>
                 </div>
             </div>
 
             {error && (
                 <div className={styles.error}>
-                    Ошибка: {error}
+                    Error: {error}
                     <button onClick={loadTournaments} className={styles.retryButton}>
-                        Попробовать снова
+                        Try Again
                     </button>
                 </div>
             )}
@@ -201,8 +203,8 @@ const AdminTournamentsPage: React.FC = () => {
             <div className={styles.tournamentsList}>
                 {filteredTournaments.length === 0 ? (
                     <div className={styles.emptyState}>
-                        <h3>Турниры не найдены</h3>
-                        <p>Создайте новый турнир или измените фильтры</p>
+                        <h3>No tournaments found</h3>
+                        <p>Create a new tournament or change filters</p>
                     </div>
                 ) : (
                     filteredTournaments.map(tournament => {
@@ -220,43 +222,43 @@ const AdminTournamentsPage: React.FC = () => {
                                 <div className={styles.tournamentInfo}>
                                     <div className={styles.infoGrid}>
                                         <div className={styles.infoItem}>
-                                            <span className={styles.label}>Игра:</span>
+                                            <span className={styles.label}>Game:</span>
                                             <span>{gameTypeText[tournament.gameType]}</span>
                                         </div>
                                         <div className={styles.infoItem}>
-                                            <span className={styles.label}>Игроки:</span>
+                                            <span className={styles.label}>Players:</span>
                                             <span>{tournament.players.length}/{tournament.maxPlayers}</span>
                                         </div>
                                         <div className={styles.infoItem}>
-                                            <span className={styles.label}>Взнос:</span>
-                                            <span>{tournament.entryFee} монет</span>
+                                            <span className={styles.label}>Entry Fee:</span>
+                                            <span>{tournament.entryFee} coins</span>
                                         </div>
                                         <div className={styles.infoItem}>
-                                            <span className={styles.label}>Призовой фонд:</span>
-                                            <span>{tournament.prizePool} монет</span>
+                                            <span className={styles.label}>Prize Pool:</span>
+                                            <span>{tournament.prizePool} coins</span>
                                         </div>
                                         <div className={styles.infoItem}>
-                                            <span className={styles.label}>Комиссия:</span>
-                                            <span>{tournament.platformCommission}% ({prizes.commission} монет)</span>
+                                            <span className={styles.label}>Commission:</span>
+                                            <span>{tournament.platformCommission}% ({prizes.commission} coins)</span>
                                         </div>
                                         <div className={styles.infoItem}>
-                                            <span className={styles.label}>Создан:</span>
+                                            <span className={styles.label}>Created:</span>
                                             <span>{new Date(tournament.createdAt).toLocaleString()}</span>
                                         </div>
                                     </div>
 
                                     {tournament.prizePool > 0 && (
                                         <div className={styles.prizeDistribution}>
-                                            <h4>Распределение призов:</h4>
+                                            <h4>Prize Distribution:</h4>
                                             <div className={styles.prizes}>
                                                 <div className={styles.prize}>
-                                                    🥇 1 место: {prizes.first} монет
+                                                    🥇 1st place: {prizes.first} coins
                                                 </div>
                                                 <div className={styles.prize}>
-                                                    🥈 2 место: {prizes.second} монет
+                                                    🥈 2nd place: {prizes.second} coins
                                                 </div>
                                                 <div className={styles.prize}>
-                                                    🥉 3-4 места: {prizes.third} монет
+                                                    🥉 3rd-4th places: {prizes.third} coins
                                                 </div>
                                             </div>
                                         </div>
@@ -264,7 +266,7 @@ const AdminTournamentsPage: React.FC = () => {
 
                                     {tournament.players.length > 0 && (
                                         <div className={styles.participantsList}>
-                                            <h4>Участники:</h4>
+                                            <h4>Participants:</h4>
                                             <div className={styles.participants}>
                                                 {tournament.players.map((player, index) => (
                                                     <span 
@@ -281,7 +283,7 @@ const AdminTournamentsPage: React.FC = () => {
 
                                     {tournament.status === 'FINISHED' && tournament.winner && (
                                         <div className={styles.winner}>
-                                            🏆 Победитель: {tournament.winner.username}
+                                            🏆 Winner: {tournament.winner.username}
                                             {tournament.winner.isBot && ' 🤖'}
                                         </div>
                                     )}
@@ -292,12 +294,12 @@ const AdminTournamentsPage: React.FC = () => {
                 )}
             </div>
 
-            {/* Модальное окно создания турнира */}
+            {/* Tournament creation modal */}
             {showCreateForm && (
                 <div className={styles.modal}>
                     <div className={styles.modalContent}>
                         <div className={styles.modalHeader}>
-                            <h2>Создать новый турнир</h2>
+                            <h2>Create New Tournament</h2>
                             <button 
                                 onClick={() => setShowCreateForm(false)}
                                 className={styles.closeButton}
@@ -308,44 +310,46 @@ const AdminTournamentsPage: React.FC = () => {
 
                         <form onSubmit={handleCreateTournament} className={styles.createForm}>
                             <div className={styles.formGroup}>
-                                <label>Название турнира:</label>
+                                <label>Tournament Name:</label>
                                 <input
                                     type="text"
                                     value={createForm.name}
                                     onChange={(e) => setCreateForm(prev => ({ ...prev, name: e.target.value }))}
-                                    placeholder="Введите название турнира"
+                                    placeholder="Enter tournament name"
                                     required
                                 />
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label>Тип игры:</label>
+                                <label>Game Type:</label>
                                 <select
                                     value={createForm.gameType}
                                     onChange={(e) => setCreateForm(prev => ({ ...prev, gameType: e.target.value as any }))}
                                 >
-                                    <option value="tic-tac-toe">Крестики-нолики</option>
-                                    <option value="checkers">Шашки</option>
-                                    <option value="chess">Шахматы</option>
-                                    <option value="backgammon">Нарды</option>
+                                    <option value="tic-tac-toe">Tic-Tac-Toe</option>
+                                    <option value="checkers">Checkers</option>
+                                    <option value="chess">Chess</option>
+                                    <option value="backgammon">Backgammon</option>
+                                    <option value="bingo">Bingo</option>
+                                    <option value="domino">Domino</option>
                                 </select>
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label>Количество игроков:</label>
+                                <label>Number of Players:</label>
                                 <select
                                     value={createForm.maxPlayers}
                                     onChange={(e) => setCreateForm(prev => ({ ...prev, maxPlayers: Number(e.target.value) as any }))}
                                 >
-                                    <option value={4}>4 игрока</option>
-                                    <option value={8}>8 игроков</option>
-                                    <option value={16}>16 игроков</option>
-                                    <option value={32}>32 игрока</option>
+                                    <option value={4}>4 players</option>
+                                    <option value={8}>8 players</option>
+                                    <option value={16}>16 players</option>
+                                    <option value={32}>32 players</option>
                                 </select>
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label>Взнос (монеты):</label>
+                                <label>Entry Fee (coins):</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -355,7 +359,7 @@ const AdminTournamentsPage: React.FC = () => {
                             </div>
 
                             <div className={styles.formGroup}>
-                                <label>Комиссия платформы (%):</label>
+                                <label>Platform Commission (%):</label>
                                 <input
                                     type="number"
                                     min="0"
@@ -366,17 +370,17 @@ const AdminTournamentsPage: React.FC = () => {
                             </div>
 
                             <div className={styles.prizePreview}>
-                                <h4>Предварительное распределение призов:</h4>
+                                <h4>Prize Distribution Preview:</h4>
                                 {(() => {
                                     const totalPool = createForm.entryFee * createForm.maxPlayers;
                                     const prizes = calculatePrizeDistribution(totalPool, createForm.platformCommission);
                                     return (
                                         <div className={styles.previewPrizes}>
-                                            <div>Общий фонд: {totalPool} монет</div>
-                                            <div>Комиссия: {prizes.commission} монет</div>
-                                            <div>🥇 1 место: {prizes.first} монет</div>
-                                            <div>🥈 2 место: {prizes.second} монет</div>
-                                            <div>🥉 3-4 места: {prizes.third} монет</div>
+                                            <div>Total Pool: {totalPool} coins</div>
+                                            <div>Commission: {prizes.commission} coins</div>
+                                            <div>🥇 1st place: {prizes.first} coins</div>
+                                            <div>🥈 2nd place: {prizes.second} coins</div>
+                                            <div>🥉 3rd-4th places: {prizes.third} coins</div>
                                         </div>
                                     );
                                 })()}
@@ -388,14 +392,14 @@ const AdminTournamentsPage: React.FC = () => {
                                     onClick={() => setShowCreateForm(false)}
                                     className={styles.cancelButton}
                                 >
-                                    Отмена
+                                    Cancel
                                 </button>
                                 <button 
                                     type="submit" 
                                     disabled={createLoading}
                                     className={styles.submitButton}
                                 >
-                                    {createLoading ? 'Создание...' : 'Создать турнир'}
+                                    {createLoading ? 'Creating...' : 'Create Tournament'}
                                 </button>
                             </div>
                         </form>

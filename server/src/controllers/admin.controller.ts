@@ -191,7 +191,7 @@ export const deleteUser = async (req: Request, res: Response) => {
         }
         
         await user.deleteOne();
-        res.json({ message: 'Пользователь успешно удален' });
+        res.json({ message: 'User successfully deleted' });
     } catch (error) {
         res.status(500).json({ message: 'Server Error' });
     }
@@ -282,7 +282,7 @@ export const getKycDocument = async (req: Request, res: Response) => {
     try {
         const user = await User.findById(userId);
         if (!user || !user.kycDocuments.some(doc => doc.filePath.endsWith(fileName))) {
-            return res.status(404).json({ message: 'Документ не найден или доступ запрещен.' });
+            return res.status(404).json({ message: 'Document not found or access denied.' });
         }
         
         const filePath = path.resolve(process.cwd(), `private/kyc-documents/${fileName}`);

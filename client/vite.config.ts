@@ -22,7 +22,7 @@ export default defineConfig({
   //   host: true,
   //   port: 5173,
   //   allowedHosts: [
-  //     'cabinetsklg.koltech.dev' // Добавь сюда свой домен
+  //     'cabinetsklg.koltech.dev' // Add your domain here
   //   ]
   // },
 

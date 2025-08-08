@@ -80,14 +80,14 @@ export const chessLogic: IGameLogic = {
         const playerIndex = players.findIndex(p => (p.user as any)._id.toString() === playerId);
         if (playerIndex === -1) {
             console.log('[Chess] Player not found');
-            return { newState: gameState, error: "Игрок не найден.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Player not found.", turnShouldSwitch: false };
         }
 
         const expectedColor: PieceColor = playerIndex === 0 ? 'white' : 'black';
         
         if (gameState.currentPlayer !== expectedColor) {
             console.log('[Chess] Wrong player turn. Expected:', expectedColor, 'Actual:', gameState.currentPlayer);
-            return { newState: gameState, error: "Сейчас не ваш ход.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Not your turn.", turnShouldSwitch: false };
         }
 
         const engine = createEngineFromState(gameState);
@@ -101,7 +101,7 @@ export const chessLogic: IGameLogic = {
         
         if (!isValidMove) {
             console.log('[Chess] Invalid move');
-            return { newState: gameState, error: "Недопустимый ход.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Invalid move.", turnShouldSwitch: false };
         }
 
         const moveSuccess = engine.makeMove(
@@ -112,7 +112,7 @@ export const chessLogic: IGameLogic = {
         
         if (!moveSuccess) {
             console.log('[Chess] Move execution failed');
-            return { newState: gameState, error: "Ход не может быть выполнен.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Move cannot be executed.", turnShouldSwitch: false };
         }
 
         const gameStatus = engine.getGameStatus();

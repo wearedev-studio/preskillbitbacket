@@ -60,25 +60,25 @@ export const backgammonLogic: IGameLogic = {
         
         if (gameState.turn !== playerId) {
             console.log('[Backgammon] Wrong player turn');
-            return { newState: gameState, error: "Сейчас не ваш ход.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Not your turn.", turnShouldSwitch: false };
         }
 
         if (gameState.turnPhase !== 'MOVING') {
             console.log('[Backgammon] Wrong turn phase');
-            return { newState: gameState, error: "Сначала бросьте кости.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Roll the dice first.", turnShouldSwitch: false };
         }
 
         const playerIndex = players.findIndex(p => (p.user as any)._id.toString() === playerId);
         if (playerIndex === -1) {
             console.log('[Backgammon] Player not found');
-            return { newState: gameState, error: "Игрок не найден.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Player not found.", turnShouldSwitch: false };
         }
 
         const expectedColor: PlayerColor = playerIndex === 0 ? 'white' : 'black';
         
         if (gameState.currentPlayer !== expectedColor) {
             console.log('[Backgammon] Wrong color turn. Expected:', expectedColor, 'Actual:', gameState.currentPlayer);
-            return { newState: gameState, error: "Сейчас не ваш ход по правилам нард.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Not your turn according to backgammon rules.", turnShouldSwitch: false };
         }
 
         const engine = createEngineFromState(gameState);
@@ -87,7 +87,7 @@ export const backgammonLogic: IGameLogic = {
         
         if (!moveSuccess) {
             console.log('[Backgammon] Move execution failed');
-            return { newState: gameState, error: "Недопустимый ход.", turnShouldSwitch: false };
+            return { newState: gameState, error: "Invalid move.", turnShouldSwitch: false };
         }
 
         const newEngineState = engine.getGameState();
@@ -224,12 +224,12 @@ export function rollDiceForBackgammon(gameState: BackgammonState, playerId: stri
     
     if (gameState.turn !== playerId) {
         console.log('[Backgammon] Wrong player turn for dice roll');
-        return { newState: gameState, error: "Сейчас не ваш ход." };
+        return { newState: gameState, error: "Not your turn." };
     }
 
     if (gameState.turnPhase !== 'ROLLING') {
         console.log('[Backgammon] Wrong turn phase for dice roll');
-        return { newState: gameState, error: "Сейчас не время бросать кости." };
+        return { newState: gameState, error: "Not time to roll dice." };
     }
 
     const engine = createEngineFromState(gameState);

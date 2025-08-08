@@ -21,7 +21,7 @@ const fileFilter = (req: any, file: any, cb: any) => {
     if (file.mimetype.startsWith('image') || file.mimetype === 'application/pdf') {
         cb(null, true);
     } else {
-        cb(new Error('Неверный тип файла!'), false);
+        cb(new Error('Invalid file type!'), false);
     }
 };
 

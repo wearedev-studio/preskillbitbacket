@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styles from './ChessBoard.module.css';
 
-// Типы для шахмат
+// Types for chess
 type PieceType = 'pawn' | 'rook' | 'knight' | 'bishop' | 'queen' | 'king';
 type PieceColor = 'white' | 'black';
 
@@ -18,7 +18,7 @@ interface Position {
 
 type ChessBoard = (ChessPiece | null)[][];
 
-// Тип для хода
+// Type for move
 type ChessMove = {
     from: Position;
     to: Position;
@@ -523,15 +523,15 @@ const ChessBoard: React.FC<ChessBoardProps> = ({
             <div className={styles.playerInfo}>
                 <div className={styles.playerInfoItem}>
                     <span className={`${styles.colorIndicator} ${styles.whiteIndicator}`}></span>
-                    Белые (ходят первыми) - {myPlayerIndex === 0 ? 'Вы' : 'Противник'}
+                    White (moves first) - {myPlayerIndex === 0 ? 'You' : 'Opponent'}
                 </div>
                 <div className={styles.playerInfoItem}>
                     <span className={`${styles.colorIndicator} ${styles.blackIndicator}`}></span>
-                    Черные - {myPlayerIndex === 1 ? 'Вы' : 'Противник'}
+                    Black - {myPlayerIndex === 1 ? 'You' : 'Opponent'}
                 </div>
                 {gameState.moveCount !== undefined && (
                     <div className={styles.moveCounter}>
-                        Ход: {Math.floor(gameState.moveCount / 2) + 1}
+                        Move: {Math.floor(gameState.moveCount / 2) + 1}
                     </div>
                 )}
             </div>
@@ -544,7 +544,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({
             
             {gameState.moveHistory && gameState.moveHistory.length > 0 && (
                 <div className={styles.gameHistory}>
-                    <strong>История ходов:</strong> {gameState.moveHistory.map((move, index) => {
+                    <strong>Move History:</strong> {gameState.moveHistory.map((move, index) => {
                         if (typeof move === 'string') {
                             return move;
                         } else if (move && typeof move === 'object' && move.from && move.to) {
@@ -552,7 +552,7 @@ const ChessBoard: React.FC<ChessBoardProps> = ({
                             const toSquare = String.fromCharCode(97 + move.to.col) + (8 - move.to.row);
                             return `${fromSquare}-${toSquare}`;
                         }
-                        return `Ход ${index + 1}`;
+                        return `Move ${index + 1}`;
                     }).join(', ')}
                 </div>
             )}
@@ -562,15 +562,15 @@ const ChessBoard: React.FC<ChessBoardProps> = ({
                 isMyTurn ? styles.myTurn : styles.opponentTurn
             }`}>
                 {isGameFinished ? (
-                    <span>Игра завершена</span>
+                    <span>Game Finished</span>
                 ) : isInCheck && isMyTurn ? (
-                    <span style={{ color: '#ef4444' }}>⚠️ ШАХ! Ваш ход</span>
+                    <span style={{ color: '#ef4444' }}>⚠️ CHECK! Your Turn</span>
                 ) : isOpponentInCheck && !isMyTurn ? (
-                    <span style={{ color: '#ef4444' }}>⚠️ ШАХ противнику! Ход противника</span>
+                    <span style={{ color: '#ef4444' }}>⚠️ CHECK to Opponent! Opponent's Turn</span>
                 ) : isMyTurn ? (
-                    <span>🟢 Ваш ход</span>
+                    <span>🟢 Your Turn</span>
                 ) : (
-                    <span>🟡 Ход противника</span>
+                    <span>🟡 Opponent's Turn</span>
                 )}
             </div>
 
@@ -578,48 +578,48 @@ const ChessBoard: React.FC<ChessBoardProps> = ({
                 <div className={styles.promotionModal}>
                     <div className={styles.promotionContent}>
                         <div className={styles.promotionTitle}>
-                            Выберите фигуру для превращения:
+                            Choose piece for promotion:
                         </div>
                         <div className={styles.promotionOptions}>
                             <div
                                 className={styles.promotionOption}
                                 onClick={() => handlePromotion('queen')}
-                                title="Ферзь"
+                                title="Queen"
                             >
                                 <div className={styles.promotionPiece}>
                                     {myColor === 'white' ? '♕' : '♛'}
                                 </div>
-                                <div className={styles.promotionLabel}>Ферзь</div>
+                                <div className={styles.promotionLabel}>Queen</div>
                             </div>
                             <div
                                 className={styles.promotionOption}
                                 onClick={() => handlePromotion('rook')}
-                                title="Ладья"
+                                title="Rook"
                             >
                                 <div className={styles.promotionPiece}>
                                     {myColor === 'white' ? '♖' : '♜'}
                                 </div>
-                                <div className={styles.promotionLabel}>Ладья</div>
+                                <div className={styles.promotionLabel}>Rook</div>
                             </div>
                             <div
                                 className={styles.promotionOption}
                                 onClick={() => handlePromotion('bishop')}
-                                title="Слон"
+                                title="Bishop"
                             >
                                 <div className={styles.promotionPiece}>
                                     {myColor === 'white' ? '♗' : '♝'}
                                 </div>
-                                <div className={styles.promotionLabel}>Слон</div>
+                                <div className={styles.promotionLabel}>Bishop</div>
                             </div>
                             <div
                                 className={styles.promotionOption}
                                 onClick={() => handlePromotion('knight')}
-                                title="Конь"
+                                title="Knight"
                             >
                                 <div className={styles.promotionPiece}>
                                     {myColor === 'white' ? '♘' : '♞'}
                                 </div>
-                                <div className={styles.promotionLabel}>Конь</div>
+                                <div className={styles.promotionLabel}>Knight</div>
                             </div>
                         </div>
                     </div>

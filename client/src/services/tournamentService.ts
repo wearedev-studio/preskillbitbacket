@@ -102,7 +102,7 @@ class TournamentService {
             return response.data;
         } catch (error) {
             console.error('Error fetching tournaments:', error);
-            throw new Error('Ошибка при получении списка турниров');
+            throw new Error('Error fetching tournaments list');
         }
     }
 
@@ -113,7 +113,7 @@ class TournamentService {
             return response.data;
         } catch (error) {
             console.error('Error fetching all tournaments:', error);
-            throw new Error('Ошибка при получении списка всех турниров');
+            throw new Error('Error fetching all tournaments list');
         }
     }
 
@@ -124,7 +124,7 @@ class TournamentService {
             return response.data;
         } catch (error) {
             console.error('Error fetching tournament:', error);
-            throw new Error('Ошибка при получении турнира');
+            throw new Error('Error fetching tournament');
         }
     }
 
@@ -139,7 +139,7 @@ class TournamentService {
             return response.data.tournament;
         } catch (error: any) {
             console.error('Error creating tournament:', error);
-            const message = error.response?.data?.message || 'Ошибка при создании турнира';
+            const message = error.response?.data?.message || 'Error creating tournament';
             throw new Error(message);
         }
     }
@@ -160,7 +160,7 @@ class TournamentService {
             return response.data;
         } catch (error: any) {
             console.error('Error registering in tournament:', error);
-            const message = error.response?.data?.message || 'Ошибка при регистрации в турнире';
+            const message = error.response?.data?.message || 'Error registering in tournament';
             throw new Error(message);
         }
     }
@@ -175,7 +175,7 @@ class TournamentService {
             return response.data;
         } catch (error: any) {
             console.error('Error unregistering from tournament:', error);
-            const message = error.response?.data?.message || 'Ошибка при отмене регистрации';
+            const message = error.response?.data?.message || 'Error cancelling registration';
             throw new Error(message);
         }
     }
@@ -187,7 +187,7 @@ class TournamentService {
             return response.data;
         } catch (error) {
             console.error('Error fetching player tournaments:', error);
-            throw new Error('Ошибка при получении турниров игрока');
+            throw new Error('Error fetching player tournaments');
         }
     }
 
@@ -211,7 +211,7 @@ class TournamentService {
             return response.data;
         } catch (error) {
             console.error('Error fetching tournament history:', error);
-            throw new Error('Ошибка при получении истории турниров');
+            throw new Error('Error fetching tournament history');
         }
     }
 
@@ -222,7 +222,7 @@ class TournamentService {
             return response.data;
         } catch (error) {
             console.error('Error fetching tournament stats:', error);
-            throw new Error('Ошибка при получении статистики турниров');
+            throw new Error('Error fetching tournament statistics');
         }
     }
 
@@ -269,10 +269,10 @@ class TournamentService {
     }
 
     formatRoundName(roundNumber: number, totalRounds: number): string {
-        if (roundNumber === totalRounds) return 'Финал';
-        if (roundNumber === totalRounds - 1) return 'Полуфинал';
-        if (roundNumber === totalRounds - 2) return 'Четвертьфинал';
-        return `Раунд ${roundNumber}`;
+        if (roundNumber === totalRounds) return 'Final';
+        if (roundNumber === totalRounds - 1) return 'Semifinal';
+        if (roundNumber === totalRounds - 2) return 'Quarterfinal';
+        return `Round ${roundNumber}`;
     }
 
     getTimeUntilStart(tournament: Tournament): number {
@@ -280,7 +280,7 @@ class TournamentService {
             return 0;
         }
 
-        const startTime = new Date(tournament.firstRegistrationTime).getTime() + 15000; // +15 секунд
+        const startTime = new Date(tournament.firstRegistrationTime).getTime() + 15000; // +15 seconds
         const now = Date.now();
         return Math.max(0, startTime - now);
     }

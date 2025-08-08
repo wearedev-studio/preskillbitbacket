@@ -16,7 +16,7 @@ export const getActiveTournamentsController = async (req: Request, res: Response
         res.json(tournaments);
     } catch (error) {
         console.error('Error fetching tournaments:', error);
-        res.status(500).json({ message: 'Ошибка при получении списка турниров' });
+        res.status(500).json({ message: 'Error fetching tournaments list' });
     }
 };
 
@@ -26,7 +26,7 @@ export const getAllTournamentsController = async (req: Request, res: Response) =
         res.json(tournaments);
     } catch (error) {
         console.error('Error fetching all tournaments:', error);
-        res.status(500).json({ message: 'Ошибка при получении списка всех турниров' });
+        res.status(500).json({ message: 'Error fetching all tournaments list' });
     }
 };
 
@@ -36,13 +36,13 @@ export const getTournament = async (req: Request, res: Response) => {
         const tournament = await getTournamentById(tournamentId);
         
         if (!tournament) {
-            return res.status(404).json({ message: 'Турнир не найден' });
+            return res.status(404).json({ message: 'Tournament not found' });
         }
         
         res.json(tournament);
     } catch (error) {
         console.error('Error fetching tournament:', error);
-        res.status(500).json({ message: 'Ошибка при получении турнира' });
+        res.status(500).json({ message: 'Error fetching tournament' });
     }
 };
 
@@ -52,19 +52,19 @@ export const createNewTournament = async (req: Request, res: Response) => {
         
         if (!name || !gameType || !maxPlayers || entryFee === undefined) {
             return res.status(400).json({ 
-                message: 'Необходимо указать название, тип игры, количество игроков и взнос' 
+                message: 'Must specify name, game type, number of players and entry fee'
             });
         }
 
         if (![4, 8, 16, 32].includes(maxPlayers)) {
             return res.status(400).json({ 
-                message: 'Количество игроков должно быть 4, 8, 16 или 32' 
+                message: 'Number of players must be 4, 8, 16 or 32'
             });
         }
 
         if (!['checkers', 'chess', 'backgammon', 'tic-tac-toe'].includes(gameType)) {
             return res.status(400).json({ 
-                message: 'Неподдерживаемый тип игры' 
+                message: 'Unsupported game type'
             });
         }
 
@@ -82,16 +82,16 @@ export const createNewTournament = async (req: Request, res: Response) => {
         );
 
         if (!tournament) {
-            return res.status(500).json({ message: 'Ошибка при создании турнира' });
+            return res.status(500).json({ message: 'Error creating tournament' });
         }
 
         res.status(201).json({
-            message: 'Турнир успешно создан',
+            message: 'Tournament successfully created',
             tournament
         });
     } catch (error) {
         console.error('Error creating tournament:', error);
-        res.status(500).json({ message: 'Ошибка при создании турнира' });
+        res.status(500).json({ message: 'Error creating tournament' });
     }
 };
 
@@ -101,7 +101,7 @@ export const registerInTournament = async (req: Request, res: Response) => {
         const userId = req.user?._id?.toString();
 
         if (!userId) {
-            return res.status(401).json({ message: 'Необходима авторизация' });
+            return res.status(401).json({ message: 'Authorization required' });
         }
 
         const socketId = req.headers['x-socket-id'] as string || 'offline';
@@ -117,7 +117,7 @@ export const registerInTournament = async (req: Request, res: Response) => {
         res.json({ message: result.message });
     } catch (error) {
         console.error('Error registering in tournament:', error);
-        res.status(500).json({ message: 'Ошибка при регистрации в турнире' });
+        res.status(500).json({ message: 'Error registering in tournament' });
     }
 };
 
@@ -127,21 +127,21 @@ export const unregisterFromTournament = async (req: Request, res: Response) => {
         const userId = req.user?._id?.toString();
 
         if (!userId) {
-            return res.status(401).json({ message: 'Необходима авторизация' });
+            return res.status(401).json({ message: 'Authorization required' });
         }
 
         const tournament = await Tournament.findById(tournamentId);
         if (!tournament) {
-            return res.status(404).json({ message: 'Турнир не найден' });
+            return res.status(404).json({ message: 'Tournament not found' });
         }
 
         if (tournament.status !== 'WAITING') {
-            return res.status(400).json({ message: 'Нельзя отменить регистрацию после начала турнира' });
+            return res.status(400).json({ message: 'Cannot cancel registration after tournament starts' });
         }
 
         const playerIndex = tournament.players.findIndex(p => p._id === userId);
         if (playerIndex === -1) {
-            return res.status(400).json({ message: 'Вы не зарегистрированы в этом турнире' });
+            return res.status(400).json({ message: 'You are not registered in this tournament' });
         }
 
         const user = await User.findById(userId);
@@ -161,10 +161,10 @@ export const unregisterFromTournament = async (req: Request, res: Response) => {
         const io: Server = req.app.get('io');
         io.emit('tournamentUpdated', tournament);
 
-        res.json({ message: 'Регистрация отменена, взнос возвращен' });
+        res.json({ message: 'Registration cancelled, entry fee refunded' });
     } catch (error) {
         console.error('Error unregistering from tournament:', error);
-        res.status(500).json({ message: 'Ошибка при отмене регистрации' });
+        res.status(500).json({ message: 'Error cancelling registration' });
     }
 };
 
@@ -173,7 +173,7 @@ export const getPlayerTournaments = async (req: Request, res: Response) => {
         const userId = req.user?._id?.toString();
 
         if (!userId) {
-            return res.status(401).json({ message: 'Необходима авторизация' });
+            return res.status(401).json({ message: 'Authorization required' });
         }
 
         const tournaments = await Tournament.find({
@@ -183,7 +183,7 @@ export const getPlayerTournaments = async (req: Request, res: Response) => {
         res.json(tournaments);
     } catch (error) {
         console.error('Error fetching player tournaments:', error);
-        res.status(500).json({ message: 'Ошибка при получении турниров игрока' });
+        res.status(500).json({ message: 'Error fetching player tournaments' });
     }
 };
 
@@ -214,7 +214,7 @@ export const getTournamentHistory = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error('Error fetching tournament history:', error);
-        res.status(500).json({ message: 'Ошибка при получении истории турниров' });
+        res.status(500).json({ message: 'Error fetching tournament history' });
     }
 };
 
@@ -265,6 +265,6 @@ export const getTournamentStats = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error('Error fetching tournament stats:', error);
-        res.status(500).json({ message: 'Ошибка при получении статистики турниров' });
+        res.status(500).json({ message: 'Error fetching tournament statistics' });
     }
 };

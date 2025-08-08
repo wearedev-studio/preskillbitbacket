@@ -1,0 +1,350 @@
+.container {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.refreshButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.refreshButton:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #6b7280;
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e5e7eb;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #dc2626;
+    text-align: center;
+    gap: 1rem;
+}
+
+.retryButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #dc2626;
+    border-radius: 6px;
+    background: white;
+    color: #dc2626;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.retryButton:hover {
+    background-color: #dc2626;
+    color: white;
+}
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+    color: #6b7280;
+}
+
+.emptyIcon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    color: #d1d5db;
+}
+
+.emptyState h4 {
+    margin: 0 0 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.emptyState p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.paymentsList {
+    padding: 0;
+}
+
+.paymentItem {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s;
+}
+
+.paymentItem:hover {
+    background-color: #f9fafb;
+}
+
+.paymentItem:last-child {
+    border-bottom: none;
+}
+
+.paymentIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #f3f4f6;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.typeIcon {
+    width: 20px;
+    height: 20px;
+    color: #6b7280;
+}
+
+.paymentDetails {
+    flex: 1;
+    min-width: 0;
+}
+
+.paymentHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.paymentType {
+    font-weight: 500;
+    color: #111827;
+    font-size: 0.875rem;
+}
+
+.paymentAmount {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.paymentAmount.positive {
+    color: #059669;
+}
+
+.paymentAmount.negative {
+    color: #dc2626;
+}
+
+.paymentMeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.paymentDate {
+    flex: 1;
+}
+
+.paymentId {
+    font-family: monospace;
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+}
+
+.paymentStatus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: 1rem;
+    flex-shrink: 0;
+}
+
+.statusIconCompleted {
+    width: 20px;
+    height: 20px;
+    color: #059669;
+}
+
+.statusIconPending {
+    width: 20px;
+    height: 20px;
+    color: #d97706;
+}
+
+.statusIconFailed {
+    width: 20px;
+    height: 20px;
+    color: #dc2626;
+}
+
+.statusIconCancelled {
+    width: 20px;
+    height: 20px;
+    color: #6b7280;
+}
+
+.statusText {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.statusCOMPLETED {
+    color: #059669;
+}
+
+.statusPENDING {
+    color: #d97706;
+}
+
+.statusFAILED {
+    color: #dc2626;
+}
+
+.statusCANCELLED {
+    color: #6b7280;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+}
+
+.paginationButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    color: #374151;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.paginationButton:hover:not(:disabled) {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+.paginationButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.paginationInfo {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 640px) {
+    .header {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .paymentItem {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+    
+    .paymentIcon {
+        align-self: flex-start;
+        margin-right: 0;
+    }
+    
+    .paymentHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .paymentMeta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .paymentStatus {
+        flex-direction: row;
+        align-items: center;
+        margin-left: 0;
+        align-self: flex-start;
+    }
+    
+    .pagination {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .paginationInfo {
+        order: -1;
+    }
+}

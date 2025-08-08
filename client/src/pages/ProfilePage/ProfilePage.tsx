@@ -10,6 +10,9 @@ import { API_URL } from '../../api/index';
 import { submitKycDocument } from '@/services/api';
 import KycModal from '../../components/modals/KycModal';
 import PaymentStatusModal from '../../components/modals/PaymentStatusModal';
+import DepositModal from '../../components/modals/DepositModal';
+import WithdrawModal from '../../components/modals/WithdrawModal';
+import PaymentHistory from '../../components/PaymentHistory/PaymentHistory';
 
 const HistoryTable: FC<{ headers: string[]; children: React.ReactNode }> = ({ headers, children }) => (
     <table className={styles.historyTable}>
@@ -75,6 +78,8 @@ const ProfilePage: React.FC = () => {
     const [kycMessage, setKycMessage] = useState({ type: '', text: '' });
 
     const [isKycModalOpen, setIsKycModalOpen] = useState(false);
+    const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
+    const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
     
     const [paymentModal, setPaymentModal] = useState({
         isOpen: false,
@@ -111,7 +116,7 @@ const ProfilePage: React.FC = () => {
             setKycMessage({ type: 'success', text: res.data.message });
             await refreshUser();
         } catch (error: any) {
-            setKycMessage({ type: 'error', text: error.response?.data?.message || 'Loading error' });
+            setKycMessage({ type: 'error', text: error.response?.data?.message || 'Upload error' });
         }
     };
 
@@ -127,7 +132,7 @@ const ProfilePage: React.FC = () => {
             setTransactionHistory(transactionsRes.data);
         } catch (err: any) {
             console.error('Failed to fetch history:', err);
-            setHistoryError(err.response?.data?.message || 'Failed to load history.');
+            setHistoryError(err.response?.data?.message || 'Failed to load history');
         } finally {
             setLoadingHistory(false);
         }
@@ -184,7 +189,7 @@ const ProfilePage: React.FC = () => {
         e.preventDefault();
         setPasswordMessage({ type: '', text: '' });
         if (newPassword.length < 6) {
-            setPasswordMessage({ type: 'error', text: 'The new password must be at least 6 characters long..' });
+            setPasswordMessage({ type: 'error', text: 'The new password must be at least 6 characters long' });
             return;
         }
         try {
@@ -197,66 +202,43 @@ const ProfilePage: React.FC = () => {
         }
     };
 
-    const handleBalanceUpdate = async (e: FormEvent, operation: 'deposit' | 'withdraw') => {
-        e.preventDefault();
-        setBalanceMessage({ type: '', text: '' });
-        const amount = Number(balanceAmount);
+    const handleDepositClick = () => {
+        setIsDepositModalOpen(true);
+    };
 
-        if (operation === 'withdraw' && user?.kycStatus !== 'APPROVED') {
+    const handleWithdrawClick = () => {
+        if (user?.kycStatus !== 'APPROVED') {
             setIsKycModalOpen(true);
             return;
         }
+        setIsWithdrawModalOpen(true);
+    };
 
-        if (isNaN(amount) || amount <= 0) {
-            setPaymentModal({
-                isOpen: true,
-                status: 'error',
-                title: 'Ошибка ввода',
-                message: 'Пожалуйста, введите корректную положительную сумму',
-                amount: 0,
-                operation
-            });
-            return;
-        }
-
+    const handleDepositSuccess = (amount: number) => {
         setPaymentModal({
             isOpen: true,
-            status: 'loading',
-            title: 'Обработка платежа',
-            message: `Обрабатываем ${operation === 'deposit' ? 'пополнение' : 'вывод'} средств...`,
+            status: 'success',
+            title: 'Deposit Successful!',
+            message: `Your deposit of $${amount.toFixed(2)} has been processed successfully.`,
             amount,
-            operation
+            operation: 'deposit'
         });
+        refreshUser();
+        fetchHistory();
+    };
 
-        const amountToSend = operation === 'deposit' ? Number(balanceAmount) : -Number(balanceAmount);
-        
-        try {
-            const response = await axios.post(`${API_URL}/api/users/balance`, { amount: amountToSend });
-            
-            await refreshUser();
-            
-            setPaymentModal({
-                isOpen: true,
-                status: 'success',
-                title: 'Операция выполнена успешно!',
-                message: `${operation === 'deposit' ? 'Пополнение' : 'Вывод'} средств прошел успешно`,
-                amount,
-                operation
-            });
-            
-            setBalanceAmount('');
-            fetchHistory();
-        } catch (err: any) {
-            setPaymentModal({
-                isOpen: true,
-                status: 'error',
-                title: 'Ошибка операции',
-                message: err.response?.data?.message || 'Произошла ошибка при обработке платежа',
-                amount,
-                operation
-            });
-        }
-    }
+    const handleWithdrawSuccess = (amount: number) => {
+        setPaymentModal({
+            isOpen: true,
+            status: 'success',
+            title: 'Withdrawal Requested!',
+            message: `Your withdrawal request for $${amount.toFixed(2)} has been submitted and will be processed within 1-3 business days.`,
+            amount,
+            operation: 'withdraw'
+        });
+        refreshUser();
+        fetchHistory();
+    };
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -283,8 +265,8 @@ const ProfilePage: React.FC = () => {
             setPaymentModal({
                 isOpen: true,
                 status: 'error',
-                title: 'Ошибка загрузки',
-                message: 'Не удалось загрузить аватар. Убедитесь, что это изображение размером менее 5МБ.',
+                title: 'Upload Error',
+                message: 'Failed to upload avatar. Make sure it is an image smaller than 5MB.',
                 amount: 0,
                 operation: 'deposit'
             });
@@ -310,7 +292,7 @@ const ProfilePage: React.FC = () => {
             <div className={styles.pageContainer}>
                 <div className={styles.profileContainer}>
                     <div className={styles.profileSection}>
-                        <h3>About</h3>
+                        <h3>Profile</h3>
                         <div className={styles.profileHeader}>
                             <div className={styles.avatarContainer}>
                                 {avatarPreview ? (
@@ -336,7 +318,7 @@ const ProfilePage: React.FC = () => {
                     </div>
 
                     <div className={styles.card}>
-                             <h3>Verification(KYC)</h3>
+                             <h3>Verification (KYC)</h3>
                              <KYCStatus user={user} onVerifyClick={() => setIsKycModalOpen(true)} />
                          </div>
 
@@ -353,28 +335,41 @@ const ProfilePage: React.FC = () => {
                                     <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className={styles.formInput} placeholder="New Password" required />
                                 </div>
                             </div>
-                            <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>🔒 Save Passowrd</button>
+                            <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`}>🔒 Save Password</button>
                             {passwordMessage.text && <div className={`${styles.alert} ${passwordMessage.type === 'error' ? styles.alertError : styles.alertSuccess}`}><p>{passwordMessage.text}</p></div>}
                         </form>
                     </div>
 
                     <div className={styles.profileSection}>
-                        <h3>Manage balance (Demo)</h3>
-                        <form>
-                            <div className={styles.formRow}>
-                                <div className={styles.formGroup}>
-                                    <label className={styles.formLabel}>Amount</label>
-                                    <input type="number" value={balanceAmount} onChange={(e) => setBalanceAmount(e.target.value)} className={styles.formInput} placeholder="Amount" required />
-                                </div>
-                                <button onClick={(e) => handleBalanceUpdate(e, 'deposit')} className={`${styles.btn} ${styles.btnSuccess}`}>💰 Deposit</button>
-                                <button type="button" onClick={(e) => handleBalanceUpdate(e, 'withdraw')} className={`${styles.btn} ${styles.btnSecondary}`}>💸 Withdraw</button>
+                        <h3>Balance Management</h3>
+                        <div className={styles.balanceActions}>
+                            <div className={styles.balanceInfo}>
+                                <p>Current Balance: <span className={styles.balanceHighlight}>${user.balance.toFixed(2)}</span></p>
+                                <p className={styles.balanceSubtext}>Manage your account funds using our secure payment gateway</p>
                             </div>
-                            {balanceMessage.text && <div className={`${styles.alert} ${balanceMessage.type === 'error' ? styles.alertError : styles.alertSuccess}`}><p>{balanceMessage.text}</p></div>}
-                        </form>
+                            <div className={styles.balanceButtons}>
+                                <button
+                                    onClick={handleDepositClick}
+                                    className={`${styles.btn} ${styles.btnSuccess}`}
+                                >
+                                    💰 Deposit Funds
+                                </button>
+                                <button
+                                    onClick={handleWithdrawClick}
+                                    className={`${styles.btn} ${styles.btnSecondary}`}
+                                >
+                                    💸 Withdraw Funds
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <div className={styles.profileSection}>
-                        <h3>Game history</h3>
+                        <PaymentHistory />
+                    </div>
+
+                    <div className={styles.profileSection}>
+                        <h3>Game History</h3>
                         <div className={styles.tableContainer}>
                             <HistoryTable headers={['Game', 'Result', 'Balance Change', 'Date']}>
                                 {gameHistory.map(game => (
@@ -396,7 +391,7 @@ const ProfilePage: React.FC = () => {
                     </div>
 
                     <div className={styles.profileSection}>
-                        <h3>Transaction history</h3>
+                        <h3>Legacy Transaction History</h3>
                         <div className={styles.tableContainer}>
                             <HistoryTable headers={['Type', 'Status', 'Amount', 'Date']}>
                                 {transactionHistory.map(tx => (
@@ -413,6 +408,17 @@ const ProfilePage: React.FC = () => {
                 </div>
             </div>
             <KycModal isOpen={isKycModalOpen} onClose={() => setIsKycModalOpen(false)} onSuccess={handleKycSuccess} />
+            <DepositModal
+                isOpen={isDepositModalOpen}
+                onClose={() => setIsDepositModalOpen(false)}
+                onSuccess={handleDepositSuccess}
+            />
+            <WithdrawModal
+                isOpen={isWithdrawModalOpen}
+                onClose={() => setIsWithdrawModalOpen(false)}
+                onSuccess={handleWithdrawSuccess}
+                currentBalance={user.balance}
+            />
             <PaymentStatusModal
                 isOpen={paymentModal.isOpen}
                 status={paymentModal.status}

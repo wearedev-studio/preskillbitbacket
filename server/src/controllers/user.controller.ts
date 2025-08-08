@@ -122,11 +122,11 @@ export const updateUserAvatar = async (req: Request, res: Response) => {
         const user = await User.findById(req.user!._id);
 
         if (!user) {
-            return res.status(404).json({ message: 'Пользователь не найден' });
+            return res.status(404).json({ message: 'User not found' });
         }
 
         if (!req.file) {
-            return res.status(400).json({ message: 'Файл не загружен' });
+            return res.status(400).json({ message: 'File not uploaded' });
         }
 
         const avatarPath = '/' + req.file.path.replace(/\\/g, '/').replace('public/', '');
@@ -143,7 +143,7 @@ export const updateUserAvatar = async (req: Request, res: Response) => {
             role: user.role
         });
     } catch (error: any) {
-        res.status(500).json({ message: 'Ошибка сервера', error: error.message });
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
@@ -151,11 +151,11 @@ export const submitKyc = async (req: Request, res: Response) => {
     const { documentType } = req.body;
     const user = await User.findById(req.user!._id);
 
-    if (!user) return res.status(404).json({ message: 'Пользователь не найден' });
+    if (!user) return res.status(404).json({ message: 'User not found' });
     if (user.kycStatus === 'PENDING' || user.kycStatus === 'APPROVED') {
-        return res.status(400).json({ message: 'Вы уже подали заявку или она одобрена.' });
+        return res.status(400).json({ message: 'You have already submitted an application or it has been approved.' });
     }
-    if (!req.file) return res.status(400).json({ message: 'Файл документа не загружен.' });
+    if (!req.file) return res.status(400).json({ message: 'Document file not uploaded.' });
 
     user.kycDocuments.push({
         documentType,

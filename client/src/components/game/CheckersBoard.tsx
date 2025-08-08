@@ -229,11 +229,11 @@ const CheckersBoard: React.FC<CheckersBoardProps> = ({ gameState, onMove, isMyTu
                 color: isMyTurn ? '#059669' : '#64748b'
             }}>
                 {isGameFinished ? (
-                    <span style={{ color: '#dc2626' }}>Игра завершена</span>
+                    <span style={{ color: '#dc2626' }}>Game Finished</span>
                 ) : isMyTurn ? (
-                    <span>Ваш ход</span>
+                    <span>Your Turn</span>
                 ) : (
-                    <span>Ход противника</span>
+                    <span>Opponent's Turn</span>
                 )}
             </div>
             
@@ -304,7 +304,7 @@ const CheckersBoard: React.FC<CheckersBoardProps> = ({ gameState, onMove, isMyTu
                         backgroundColor: '#f5f5f5',
                         border: '1px solid #ccc'
                     }}></div>
-                    <span>Белые {myPlayerIndex === 0 ? '(Вы)' : ''}</span>
+                    <span>White {myPlayerIndex === 0 ? '(You)' : ''}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                     <div style={{
@@ -314,7 +314,7 @@ const CheckersBoard: React.FC<CheckersBoardProps> = ({ gameState, onMove, isMyTu
                         backgroundColor: '#1e1e1e',
                         border: '1px solid #333'
                     }}></div>
-                    <span>Черные {myPlayerIndex === 1 ? '(Вы)' : ''}</span>
+                    <span>Black {myPlayerIndex === 1 ? '(You)' : ''}</span>
                 </div>
             </div>
         </div>

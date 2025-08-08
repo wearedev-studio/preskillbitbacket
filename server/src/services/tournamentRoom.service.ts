@@ -130,13 +130,13 @@ async function notifyPlayersAboutMatch(io: Server, room: ITournamentRoom) {
                     opponent: opponent
                 });
 
-                const roundText = currentRound === 1 ? 'Первый раунд' :
-                                currentRound === 2 ? 'Полуфинал' :
-                                currentRound === 3 ? 'Финал' : `Раунд ${currentRound}`;
+                const roundText = currentRound === 1 ? 'First Round' :
+                                currentRound === 2 ? 'Semifinal' :
+                                currentRound === 3 ? 'Final' : `Round ${currentRound}`;
                 
                 await createNotification(io, player._id, {
-                    title: `⚔️ ${roundText} турнира готов!`,
-                    message: `${roundText} турнира "${tournament.name}". Противник: ${opponent?.username}`,
+                    title: `⚔️ Tournament ${roundText} ready!`,
+                    message: `Tournament ${roundText} "${tournament.name}". Opponent: ${opponent?.username}`,
                     link: `/tournament-game/${room.matchId}`
                 });
 
@@ -158,20 +158,20 @@ export async function joinTournamentRoom(
         const room = tournamentRooms[matchId] || await TournamentRoom.findOne({ matchId });
         if (!room) {
             console.log(`[TournamentRoom] Room ${matchId} not found`);
-            socket.emit('error', { message: 'Турнирный матч не найден' });
+            socket.emit('error', { message: 'Tournament match not found' });
             return false;
         }
 
         if (room.status === 'FINISHED') {
             console.log(`[TournamentRoom] Match ${matchId} is already finished`);
-            socket.emit('error', { message: 'Этот матч уже завершен' });
+            socket.emit('error', { message: 'This match is already finished' });
             return false;
         }
 
         const player = room.players.find(p => p._id.toString() === playerId.toString());
         if (!player) {
             console.log(`[TournamentRoom] Player ${playerId} not in match ${matchId}`);
-            socket.emit('error', { message: 'Вы не участвуете в этом матче' });
+            socket.emit('error', { message: 'You are not participating in this match' });
             return false;
         }
 
@@ -244,7 +244,7 @@ export async function joinTournamentRoom(
         return true;
     } catch (error) {
         console.error(`[TournamentRoom] Error joining room:`, error);
-        socket.emit('error', { message: 'Ошибка подключения к матчу' });
+        socket.emit('error', { message: 'Error connecting to match' });
         return false;
     }
 }
@@ -263,14 +263,14 @@ export async function processTournamentMove(
         const room = tournamentRooms[matchId] || await TournamentRoom.findOne({ matchId });
         if (!room || room.status !== 'ACTIVE') {
             console.log(`[TournamentRoom] Room not found or not active: ${room?.status}`);
-            if (socket) socket.emit('tournamentGameError', { matchId, error: 'Матч недоступен' });
+            if (socket) socket.emit('tournamentGameError', { matchId, error: 'Match unavailable' });
             return;
         }
 
         const player = room.players.find(p => p._id.toString() === playerId.toString());
         if (!player) {
             console.log(`[TournamentRoom] Player not found in room`);
-            if (socket) socket.emit('tournamentGameError', { matchId, error: 'Игрок не найден в матче' });
+            if (socket) socket.emit('tournamentGameError', { matchId, error: 'Player not found in match' });
             return;
         }
 
@@ -284,7 +284,7 @@ export async function processTournamentMove(
             
             if (currentTurn !== playerIdStr) {
                 console.log(`[TournamentRoom] Turn check failed: expected ${currentTurn}, got ${playerIdStr}`);
-                if (socket) socket.emit('tournamentGameError', { matchId, error: 'Сейчас не ваш ход' });
+                if (socket) socket.emit('tournamentGameError', { matchId, error: 'Not your turn' });
                 return;
             }
         }
@@ -292,7 +292,7 @@ export async function processTournamentMove(
         const gameLogic = gameLogics[room.gameType as keyof typeof gameLogics];
         if (!gameLogic) {
             console.log(`[TournamentRoom] No game logic found for ${room.gameType}`);
-            if (socket) socket.emit('tournamentGameError', { matchId, error: 'Игровая логика недоступна' });
+            if (socket) socket.emit('tournamentGameError', { matchId, error: 'Game logic unavailable' });
             return;
         }
 
@@ -398,7 +398,7 @@ export async function processTournamentMove(
         console.log(`[TournamentRoom] Successfully processed move in match ${matchId}`);
     } catch (error) {
         console.error(`[TournamentRoom] Error processing move:`, error);
-        if (socket) socket.emit('tournamentGameError', { matchId, error: 'Ошибка обработки хода' });
+        if (socket) socket.emit('tournamentGameError', { matchId, error: 'Move processing error' });
     }
 }
 
@@ -489,33 +489,33 @@ async function notifyPlayersAboutMatchResult(
                     if (isWinner) {
                         socket.emit('tournamentMatchResult', {
                             type: 'ADVANCED',
-                            message: 'Поздравляем! Вы прошли в следующий раунд!',
+                            message: 'Congratulations! You advanced to the next round!',
                             tournamentId: tournament._id,
                             status: 'WAITING_NEXT_ROUND'
                         });
 
                         await createNotification(io, player._id, {
-                            title: `🏆 Победа в матче!`,
-                            message: `Вы прошли в следующий раунд турнира "${tournament.name}"`,
+                            title: `🏆 Match Victory!`,
+                            message: `You advanced to the next round of tournament "${tournament.name}"`,
                             link: `/tournament/${tournament._id}`
                         });
                     } else if (isLoser) {
                         socket.emit('tournamentMatchResult', {
                             type: 'ELIMINATED',
-                            message: 'Вы выбыли из турнира',
+                            message: 'You have been eliminated from the tournament',
                             tournamentId: tournament._id,
                             status: 'ELIMINATED'
                         });
 
                         await createNotification(io, player._id, {
-                            title: `😔 Поражение в турнире`,
-                            message: `Вы выбыли из турнира "${tournament.name}"`,
+                            title: `😔 Tournament Defeat`,
+                            message: `You have been eliminated from tournament "${tournament.name}"`,
                             link: `/tournament/${tournament._id}`
                         });
                     } else {
                         socket.emit('tournamentMatchResult', {
                             type: 'DRAW',
-                            message: 'Ничья! Определяется случайный победитель...',
+                            message: 'Draw! Determining random winner...',
                             tournamentId: tournament._id,
                             status: 'WAITING_NEXT_ROUND'
                         });
@@ -530,7 +530,7 @@ async function notifyPlayersAboutMatchResult(
 
 export function cleanupInactiveTournamentRooms(): void {
     const now = Date.now();
-    const CLEANUP_TIMEOUT = 60 * 60 * 1000; // 1 час
+    const CLEANUP_TIMEOUT = 60 * 60 * 1000; // 1 hour
 
     Object.keys(tournamentRooms).forEach(matchId => {
         const room = tournamentRooms[matchId];
@@ -804,10 +804,10 @@ async function finishTournament(io: Server, tournament: ITournament, winner: any
                 }
                 
                 await createNotification(io, player._id, {
-                    title: isWinner ? `🏆 Поздравляем с победой!` : `🎯 Турнир завершен`,
+                    title: isWinner ? `🏆 Congratulations on your victory!` : `🎯 Tournament completed`,
                     message: isWinner
-                        ? `Вы выиграли турнир "${tournament.name}"! Приз: ${Math.floor(tournament.prizePool * 0.6)} монет`
-                        : `Турнир "${tournament.name}" завершен. Победитель: ${winner.username}`,
+                        ? `You won tournament "${tournament.name}"! Prize: ${Math.floor(tournament.prizePool * 0.6)} coins`
+                        : `Tournament "${tournament.name}" completed. Winner: ${winner.username}`,
                     link: `/tournament/${tournament._id}`
                 });
             }
@@ -855,7 +855,7 @@ async function startTournamentReplay(io: Server, room: ITournamentRoom): Promise
             matchId: room.matchId,
             replayNumber: room.replayCount,
             gameState: newGameState,
-            message: `Ничья! Начинается переигровка ${room.replayCount}/3`
+            message: `Draw! Starting replay ${room.replayCount}/3`
         });
 
         for (const player of room.players) {
@@ -873,8 +873,8 @@ async function startTournamentReplay(io: Server, room: ITournamentRoom): Promise
                     });
 
                     await createNotification(io, player._id, {
-                        title: `🔄 Переигровка ${room.replayCount}/3`,
-                        message: `Ничья в турнирном матче! Начинается переигровка`,
+                        title: `🔄 Replay ${room.replayCount}/3`,
+                        message: `Draw in tournament match! Starting replay`,
                         link: `/tournament-game/${room.matchId}`
                     });
                 }
