@@ -9,6 +9,7 @@ import { checkersLogic } from './games/checkers.logic';
 import { chessLogic } from './games/chess.logic';
 import { backgammonLogic, rollDiceForBackgammon } from './games/backgammon.logic';
 import { durakLogic } from './games/durak.logic';
+import { dominoLogic } from './games/domino.logic';
 import {
     advanceTournamentWinner,
     handleTournamentPlayerLeft,
@@ -28,7 +29,7 @@ interface Player {
 
 export interface Room {
     id: string;
-    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak';
+    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino';
     bet: number;
     players: Player[];
     gameState: GameState;
@@ -51,7 +52,8 @@ export const gameLogics: Record<Room['gameType'], IGameLogic> = {
     'checkers': checkersLogic,
     'chess': chessLogic,
     'backgammon': backgammonLogic,
-    'durak': durakLogic
+    'durak': durakLogic,
+    'domino': dominoLogic
 };
 
 const BOT_WAIT_TIME = 15000;
@@ -77,13 +79,14 @@ function getPublicRoomState(room: Room) {
     return publicState;
 }
 
-function formatGameNameForDB(gameType: string): 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' {
+function formatGameNameForDB(gameType: string): 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino' {
     switch (gameType) {
         case 'tic-tac-toe': return 'Tic-Tac-Toe';
         case 'checkers': return 'Checkers';
         case 'chess': return 'Chess';
         case 'backgammon': return 'Backgammon';
         case 'durak': return 'Durak';
+        case 'domino': return 'Domino';
         default: return 'Tic-Tac-Toe';
     }
 }
@@ -427,6 +430,16 @@ export const initializeSocket = (io: Server) => {
                     room.players.push({ socketId: 'bot_socket_id', user: botUser });
                     room.gameState = gameLogic.createInitialState(room.players);
                     io.to(roomId).emit('gameStart', getPublicRoomState(room));
+                    
+                    // Check if bot should start first in domino
+                    if (room.gameType === 'domino') {
+                        const botPlayer = room.players.find(p => isBot(p));
+                        if (botPlayer && room.gameState.turn === (botPlayer.user._id as any).toString()) {
+                            setTimeout(() => {
+                                processBotMoveInRegularGame(io, roomId, botPlayer, gameLogic);
+                            }, 1500);
+                        }
+                    }
                 }
             }, BOT_WAIT_TIME);
         });
@@ -460,6 +473,16 @@ export const initializeSocket = (io: Server) => {
                         currentRoom.players.push({ socketId: 'bot_socket_id', user: botUser });
                         currentRoom.gameState = gameLogic.createInitialState(currentRoom.players);
                         io.to(roomId).emit('gameStart', getPublicRoomState(currentRoom));
+                        
+                        // Check if bot should start first in domino
+                        if (currentRoom.gameType === 'domino') {
+                            const botPlayer = currentRoom.players.find(p => isBot(p));
+                            if (botPlayer && currentRoom.gameState.turn === (botPlayer.user._id as any).toString()) {
+                                setTimeout(() => {
+                                    processBotMoveInRegularGame(io, roomId, botPlayer, gameLogic);
+                                }, 1500);
+                            }
+                        }
                     }
                 }, BOT_WAIT_TIME);
 
@@ -470,6 +493,16 @@ export const initializeSocket = (io: Server) => {
                 
                 room.gameState = gameLogic.createInitialState(room.players);
                 io.to(roomId).emit('gameStart', getPublicRoomState(room));
+                
+                // Check if bot should start first in domino
+                if (room.gameType === 'domino') {
+                    const botPlayer = room.players.find(p => isBot(p));
+                    if (botPlayer && room.gameState.turn === (botPlayer.user._id as any).toString()) {
+                        setTimeout(() => {
+                            processBotMoveInRegularGame(io, roomId, botPlayer, gameLogic);
+                        }, 1500);
+                    }
+                }
             }
             
             broadcastLobbyState(io, room.gameType);

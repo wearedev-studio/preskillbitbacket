@@ -105,7 +105,7 @@ export type GameState = ITicTacToeState | IChessState | ICheckersState | IBackga
 
 export interface IRoom {
     id: string;
-    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak';
+    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino';
     bet: number;
     players: GamePlayer[];
     gameState: GameState;

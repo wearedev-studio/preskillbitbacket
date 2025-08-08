@@ -2,7 +2,7 @@ import mongoose, { Document, Schema, Types } from 'mongoose';
 
 export interface IGameRecord extends Document {
     user: Types.ObjectId;
-    gameName: 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak';
+    gameName: 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' | 'Domino';
     status: 'WON' | 'LOST' | 'DRAW';
     amountChanged: number;
     opponent: string;
@@ -18,7 +18,7 @@ const gameRecordSchema = new Schema<IGameRecord>({
     gameName: {
         type: String,
         required: true,
-        enum: ['Checkers', 'Chess', 'Backgammon', 'Tic-Tac-Toe', 'Durak'],
+        enum: ['Checkers', 'Chess', 'Backgammon', 'Tic-Tac-Toe', 'Durak', 'Domino'],
     },
     status: {
         type: String,

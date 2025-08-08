@@ -1,0 +1,655 @@
+.dominoBoard {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 12px;
+    color: white;
+    min-height: 600px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Game Info */
+.gameInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.playerInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.playerName {
+    font-weight: bold;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.playerStats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+.boneyardInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: rgba(139, 69, 19, 0.3);
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid rgba(139, 69, 19, 0.5);
+}
+
+.boneyardCount {
+    font-size: 24px;
+    font-weight: bold;
+    color: #deb887;
+}
+
+.boneyardLabel {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Game Table */
+.gameTable {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.opponentHand {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    min-height: 60px;
+    align-items: center;
+}
+
+.playerHand {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    min-height: 80px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.emptyHand {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Board Area */
+.boardArea {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: rgba(34, 139, 34, 0.2);
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid rgba(34, 139, 34, 0.4);
+    min-height: 400px;
+}
+
+.phaseIndicator {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.boardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex: 1;
+    min-height: 350px;
+    position: relative;
+}
+
+/* NEW: Domino Chain Container - DYNAMIC SIZE */
+.dominoChainContainer {
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    max-height: none;
+    height: auto;
+    display: block;
+    overflow: visible;
+    padding: 20px;
+    background: rgba(34, 139, 34, 0.1);
+    border-radius: 8px;
+}
+
+/* NEW: Chain Domino Styles - NO OVERLAPPING */
+.chainDomino {
+    position: absolute;
+    width: 50px;
+    height: 25px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: 2px solid #2c5530;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.chainDomino:hover {
+    transform: scale(1.05);
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(74, 222, 128, 0.4);
+    border-color: #4ade80;
+}
+
+.chainDominoContent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.chainDominoHalf {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    background: linear-gradient(145deg, #fafafa, #f0f0f0);
+}
+
+.chainDominoDivider {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, #6c757d, #495057);
+    border-radius: 1px;
+}
+
+/* NEW: Chain Dots - Large and Visible */
+.chainDots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1px;
+    width: 100%;
+    height: 100%;
+    max-width: 18px;
+    max-height: 18px;
+    min-width: 14px;
+    min-height: 14px;
+}
+
+.chainDot {
+    background: #2c5530;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    grid-column: 2;
+    grid-row: 2;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.3);
+    border: 1px solid #1a3a1d;
+}
+
+/* Chain dot patterns for better visibility */
+.chainDots:has(.chainDot:nth-child(1)) .chainDot:nth-child(1) { grid-column: 2; grid-row: 2; }
+
+.chainDots:has(.chainDot:nth-child(2)) .chainDot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(2)) .chainDot:nth-child(2) { grid-column: 3; grid-row: 3; }
+
+.chainDots:has(.chainDot:nth-child(3)) .chainDot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(3)) .chainDot:nth-child(2) { grid-column: 2; grid-row: 2; }
+.chainDots:has(.chainDot:nth-child(3)) .chainDot:nth-child(3) { grid-column: 3; grid-row: 3; }
+
+.chainDots:has(.chainDot:nth-child(4)) .chainDot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(4)) .chainDot:nth-child(2) { grid-column: 3; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(4)) .chainDot:nth-child(3) { grid-column: 1; grid-row: 3; }
+.chainDots:has(.chainDot:nth-child(4)) .chainDot:nth-child(4) { grid-column: 3; grid-row: 3; }
+
+.chainDots:has(.chainDot:nth-child(5)) .chainDot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(5)) .chainDot:nth-child(2) { grid-column: 3; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(5)) .chainDot:nth-child(3) { grid-column: 2; grid-row: 2; }
+.chainDots:has(.chainDot:nth-child(5)) .chainDot:nth-child(4) { grid-column: 1; grid-row: 3; }
+.chainDots:has(.chainDot:nth-child(5)) .chainDot:nth-child(5) { grid-column: 3; grid-row: 3; }
+
+.chainDots:has(.chainDot:nth-child(6)) .chainDot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(6)) .chainDot:nth-child(2) { grid-column: 3; grid-row: 1; }
+.chainDots:has(.chainDot:nth-child(6)) .chainDot:nth-child(3) { grid-column: 1; grid-row: 2; }
+.chainDots:has(.chainDot:nth-child(6)) .chainDot:nth-child(4) { grid-column: 3; grid-row: 2; }
+.chainDots:has(.chainDot:nth-child(6)) .chainDot:nth-child(5) { grid-column: 1; grid-row: 3; }
+.chainDots:has(.chainDot:nth-child(6)) .chainDot:nth-child(6) { grid-column: 3; grid-row: 3; }
+
+.emptyBoard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    text-align: center;
+    padding: 40px;
+}
+
+.boardSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    min-width: 80px;
+    min-height: 80px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.boardSide:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.boardSide.canDrop {
+    border-color: #4ade80;
+    background: rgba(74, 222, 128, 0.2);
+    cursor: pointer;
+}
+
+.boardSide.canDrop:hover {
+    background: rgba(74, 222, 128, 0.3);
+    border-color: #22c55e;
+}
+
+.boardSide.dragHover {
+    background: rgba(74, 222, 128, 0.4);
+    border-color: #16a34a;
+    transform: scale(1.05);
+}
+
+.sideLabel {
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dropHint {
+    font-size: 10px;
+    color: #4ade80;
+    text-align: center;
+}
+
+/* Player Hand Domino Styles */
+.domino {
+    display: flex;
+    flex-direction: column;
+    width: 40px;
+    height: 80px;
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.domino:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.domino.selected {
+    border-color: #007bff;
+    background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+}
+
+.domino.canPlay {
+    border-color: #28a745;
+    background: linear-gradient(145deg, #e8f5e8, #d4edda);
+}
+
+.domino.canPlay:hover {
+    border-color: #20c997;
+    background: linear-gradient(145deg, #d1ecf1, #bee5eb);
+}
+
+.playerDomino {
+    cursor: pointer;
+}
+
+.playerDomino:hover {
+    transform: translateY(-3px);
+}
+
+.dominoBack {
+    width: 40px;
+    height: 80px;
+    background: linear-gradient(145deg, #6c757d, #495057);
+    border: 2px solid #343a40;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #adb5bd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dominoHalf {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+
+.dominoDivider {
+    height: 2px;
+    background: #6c757d;
+    margin: 0 4px;
+}
+
+.dots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 1px;
+    width: 100%;
+    height: 100%;
+    max-width: 24px;
+    max-height: 24px;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    background: #343a40;
+    border-radius: 50%;
+    grid-column: 2;
+    grid-row: 2;
+}
+
+/* Dot patterns for different numbers */
+.dots:has(.dot:nth-child(1)) .dot:nth-child(1) { grid-column: 2; grid-row: 2; }
+
+.dots:has(.dot:nth-child(2)) .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.dots:has(.dot:nth-child(2)) .dot:nth-child(2) { grid-column: 3; grid-row: 3; }
+
+.dots:has(.dot:nth-child(3)) .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.dots:has(.dot:nth-child(3)) .dot:nth-child(2) { grid-column: 2; grid-row: 2; }
+.dots:has(.dot:nth-child(3)) .dot:nth-child(3) { grid-column: 3; grid-row: 3; }
+
+.dots:has(.dot:nth-child(4)) .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.dots:has(.dot:nth-child(4)) .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+.dots:has(.dot:nth-child(4)) .dot:nth-child(3) { grid-column: 1; grid-row: 3; }
+.dots:has(.dot:nth-child(4)) .dot:nth-child(4) { grid-column: 3; grid-row: 3; }
+
+.dots:has(.dot:nth-child(5)) .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.dots:has(.dot:nth-child(5)) .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+.dots:has(.dot:nth-child(5)) .dot:nth-child(3) { grid-column: 2; grid-row: 2; }
+.dots:has(.dot:nth-child(5)) .dot:nth-child(4) { grid-column: 1; grid-row: 3; }
+.dots:has(.dot:nth-child(5)) .dot:nth-child(5) { grid-column: 3; grid-row: 3; }
+
+.dots:has(.dot:nth-child(6)) .dot:nth-child(1) { grid-column: 1; grid-row: 1; }
+.dots:has(.dot:nth-child(6)) .dot:nth-child(2) { grid-column: 3; grid-row: 1; }
+.dots:has(.dot:nth-child(6)) .dot:nth-child(3) { grid-column: 1; grid-row: 2; }
+.dots:has(.dot:nth-child(6)) .dot:nth-child(4) { grid-column: 3; grid-row: 2; }
+.dots:has(.dot:nth-child(6)) .dot:nth-child(5) { grid-column: 1; grid-row: 3; }
+.dots:has(.dot:nth-child(6)) .dot:nth-child(6) { grid-column: 3; grid-row: 3; }
+
+.playableIndicator {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #28a745;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Instructions */
+.instructions {
+    background: rgba(255, 193, 7, 0.2);
+    border: 1px solid rgba(255, 193, 7, 0.4);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff3cd;
+}
+
+/* Game Controls */
+.gameControls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px;
+}
+
+.controlButton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 100px;
+    justify-content: center;
+}
+
+.drawButton {
+    background: linear-gradient(145deg, #17a2b8, #138496);
+    color: white;
+}
+
+.drawButton:hover {
+    background: linear-gradient(145deg, #138496, #117a8b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+}
+
+.passButton {
+    background: linear-gradient(145deg, #6c757d, #5a6268);
+    color: white;
+}
+
+.passButton:hover {
+    background: linear-gradient(145deg, #5a6268, #495057);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+/* Game Status */
+.gameStatus {
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.gameStatus.myTurn {
+    background: rgba(40, 167, 69, 0.2);
+    border: 2px solid rgba(40, 167, 69, 0.4);
+    color: #d4edda;
+}
+
+.gameStatus.opponentTurn {
+    background: rgba(255, 193, 7, 0.2);
+    border: 2px solid rgba(255, 193, 7, 0.4);
+    color: #fff3cd;
+}
+
+/* Drag Preview */
+.dragPreview {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    transform: translate(-50%, -50%) rotate(5deg);
+    opacity: 0.8;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dominoBoard {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .gameInfo {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .playerInfo {
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+    .boardContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .dominoChainContainer {
+        min-height: 280px;
+        padding: 15px;
+    }
+    
+    .chainDomino {
+        width: 50px;
+        height: 25px;
+    }
+    
+    .chainDomino.vertical {
+        width: 25px;
+        height: 50px;
+    }
+    
+    .chainDots {
+        max-width: 20px;
+        max-height: 20px;
+        min-width: 16px;
+        min-height: 16px;
+    }
+    
+    .chainDot {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .playerHand,
+    .opponentHand {
+        gap: 6px;
+        padding: 8px;
+    }
+    
+    .domino {
+        width: 35px;
+        height: 70px;
+    }
+    
+    .gameControls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .controlButton {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .dominoChainContainer {
+        min-height: 220px;
+        padding: 10px;
+    }
+    
+    .chainDomino {
+        width: 40px;
+        height: 20px;
+    }
+    
+    .chainDomino.vertical {
+        width: 20px;
+        height: 40px;
+    }
+    
+    .chainDots {
+        max-width: 16px;
+        max-height: 16px;
+        min-width: 12px;
+        min-height: 12px;
+    }
+    
+    .chainDot {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .domino {
+        width: 30px;
+        height: 60px;
+    }
+    
+    .dots {
+        max-width: 20px;
+        max-height: 20px;
+    }
+    
+    .dot {
+        width: 3px;
+        height: 3px;
+    }
+    
+    .boardSide {
+        min-width: 60px;
+        min-height: 60px;
+        padding: 10px;
+    }
+}
