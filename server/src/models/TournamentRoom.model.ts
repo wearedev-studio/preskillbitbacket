@@ -11,7 +11,7 @@ export interface ITournamentRoom extends Document {
     _id: Types.ObjectId;
     tournamentId: Types.ObjectId;
     matchId: string;
-    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon';
+    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak';
     players: ITournamentRoomPlayer[];
     gameState: any;
     status: 'WAITING' | 'ACTIVE' | 'FINISHED';
@@ -34,7 +34,7 @@ const tournamentRoomSchema = new Schema<ITournamentRoom>({
     gameType: {
         type: String,
         required: true,
-        enum: ['tic-tac-toe', 'checkers', 'chess', 'backgammon']
+        enum: ['tic-tac-toe', 'checkers', 'chess', 'backgammon', 'durak']
     },
     players: [tournamentRoomPlayerSchema],
     gameState: { type: Schema.Types.Mixed },

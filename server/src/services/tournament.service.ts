@@ -33,7 +33,7 @@ export async function createTournament(
             throw new Error('Количество игроков должно быть 4, 8, 16 или 32');
         }
 
-        if (!['checkers', 'chess', 'backgammon', 'tic-tac-toe'].includes(gameType)) {
+        if (!['checkers', 'chess', 'backgammon', 'tic-tac-toe', 'durak'].includes(gameType)) {
             throw new Error('Неподдерживаемый тип игры');
         }
 

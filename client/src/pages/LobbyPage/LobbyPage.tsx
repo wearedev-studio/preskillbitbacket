@@ -25,6 +25,7 @@ const getGameIcon = (gameType: string = ''): string => {
         case 'checkers': return '⚫';
         case 'chess': return '♛';
         case 'backgammon': return '🎲';
+        case 'durak': return '🃏';
         default: return '🎮';
     }
 }

@@ -8,6 +8,7 @@ import Tournament from '../models/Tournament.model';
 import Transaction from '../models/Transaction.model';
 import GameRecord from '../models/GameRecord.model';
 import { createNotification } from '../services/notification.service';
+import { createTournament as createTournamentService } from '../services/tournament.service';
 import path from 'path';
 
 let roomsRef: Record<string, Room> = {}; 
@@ -88,16 +89,30 @@ export const createTournament = async (req: Request, res: Response) => {
     }
 
     try {
-        const tournament = new Tournament({
+        const io: Server = req.app.get('io');
+        
+        // Calculate prize pool (90% of total entry fees)
+        const totalEntryFees = Number(entryFee) * Number(maxPlayers);
+        const prizePool = Math.floor(totalEntryFees * 0.9);
+        const platformCommission = 10; // 10%
+
+        const tournament = await createTournamentService(
+            io,
             name,
             gameType,
-            entryFee: Number(entryFee) || 0,
-            maxPlayers: Number(maxPlayers)
-        });
+            Number(maxPlayers),
+            Number(entryFee) || 0,
+            prizePool,
+            platformCommission
+        );
 
-        await tournament.save();
+        if (!tournament) {
+            return res.status(400).json({ message: 'Failed to create tournament. Invalid game type or parameters.' });
+        }
+
         res.status(201).json(tournament);
     } catch (error: any) {
+        console.error('[Admin] Error creating tournament:', error);
         res.status(500).json({ message: 'Server Error when creating a tournament', error: error.message });
     }
 };

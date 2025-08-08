@@ -8,6 +8,7 @@ import { ticTacToeLogic } from './games/tic-tac-toe.logic';
 import { checkersLogic } from './games/checkers.logic';
 import { chessLogic } from './games/chess.logic';
 import { backgammonLogic, rollDiceForBackgammon } from './games/backgammon.logic';
+import { durakLogic } from './games/durak.logic';
 import {
     advanceTournamentWinner,
     handleTournamentPlayerLeft,
@@ -27,7 +28,7 @@ interface Player {
 
 export interface Room {
     id: string;
-    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon';
+    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak';
     bet: number;
     players: Player[];
     gameState: GameState;
@@ -49,7 +50,8 @@ export const gameLogics: Record<Room['gameType'], IGameLogic> = {
     'tic-tac-toe': ticTacToeLogic,
     'checkers': checkersLogic,
     'chess': chessLogic,
-    'backgammon': backgammonLogic
+    'backgammon': backgammonLogic,
+    'durak': durakLogic
 };
 
 const BOT_WAIT_TIME = 15000;
@@ -75,12 +77,13 @@ function getPublicRoomState(room: Room) {
     return publicState;
 }
 
-function formatGameNameForDB(gameType: string): 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' {
+function formatGameNameForDB(gameType: string): 'Checkers' | 'Chess' | 'Backgammon' | 'Tic-Tac-Toe' | 'Durak' {
     switch (gameType) {
         case 'tic-tac-toe': return 'Tic-Tac-Toe';
         case 'checkers': return 'Checkers';
         case 'chess': return 'Chess';
         case 'backgammon': return 'Backgammon';
+        case 'durak': return 'Durak';
         default: return 'Tic-Tac-Toe';
     }
 }

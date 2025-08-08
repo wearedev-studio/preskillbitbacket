@@ -1,5 +1,5 @@
 import axios from 'axios';
-const apiClient = axios.create({ baseURL: 'https://sklgmsapi.koltech.dev/api' });
+const apiClient = axios.create({ baseURL: 'http://localhost:5001/api' });
 
 export const submitKycDocument = (formData: FormData) => {
     const token = localStorage.getItem('token');

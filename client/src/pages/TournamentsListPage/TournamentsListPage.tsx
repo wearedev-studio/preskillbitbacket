@@ -10,24 +10,25 @@ const TournamentsListPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<'all' | 'waiting' | 'active' | 'finished' | 'cancelled'>('all');
-    const [gameTypeFilter, setGameTypeFilter] = useState<'all' | 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon'>('all');
+    const [gameTypeFilter, setGameTypeFilter] = useState<'all' | 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak'>('all');
     
     const { user } = useAuth();
     const { socket } = useSocket();
     const navigate = useNavigate();
 
     const statusText = {
-        WAITING: 'Ожидание игроков',
-        ACTIVE: 'Активный',
-        FINISHED: 'Завершен',
-        CANCELLED: 'Отменен'
+        WAITING: 'Waiting for players',
+        ACTIVE: 'Active',
+        FINISHED: 'Finished',
+        CANCELLED: 'Cancelled'
     };
 
     const gameTypeText = {
-        'tic-tac-toe': 'Крестики-нолики',
-        'checkers': 'Шашки',
-        'chess': 'Шахматы',
-        'backgammon': 'Нарды'
+        'tic-tac-toe': 'Tic-Tac-Toe',
+        'checkers': 'Checkers',
+        'chess': 'Chess',
+        'backgammon': 'Backgammon',
+        'durak': 'Durak'
     };
 
     useEffect(() => {
@@ -129,7 +130,7 @@ const TournamentsListPage: React.FC = () => {
     if (loading) {
         return (
             <div className={styles.container}>
-                <div className={styles.loading}>Загрузка турниров...</div>
+                <div className={styles.loading}>Loading tournaments...</div>
             </div>
         );
     }
@@ -138,9 +139,9 @@ const TournamentsListPage: React.FC = () => {
         return (
             <div className={styles.container}>
                 <div className={styles.error}>
-                    Ошибка: {error}
+                    Error: {error}
                     <button onClick={loadTournaments} className={styles.retryButton}>
-                        Попробовать снова
+                        Try again
                     </button>
                 </div>
             </div>
@@ -150,52 +151,53 @@ const TournamentsListPage: React.FC = () => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1>Турниры</h1>
-                <button 
-                    onClick={loadTournaments} 
+                <h1>Tournaments</h1>
+                <button
+                    onClick={loadTournaments}
                     className={styles.refreshButton}
                     disabled={loading}
                 >
-                    🔄 Обновить
+                    🔄 Refresh
                 </button>
             </div>
 
             <div className={styles.filters}>
                 <div className={styles.filterGroup}>
-                    <label>Статус:</label>
+                    <label>Status:</label>
                     <select 
                         value={filter} 
                         onChange={(e) => setFilter(e.target.value as any)}
                         className={styles.filterSelect}
                     >
-                        <option value="all">Все</option>
-                        <option value="waiting">Ожидание</option>
-                        <option value="active">Активные</option>
-                        <option value="finished">Завершенные</option>
-                        <option value="cancelled">Отмененные</option>
+                        <option value="all">All</option>
+                        <option value="waiting">Waiting</option>
+                        <option value="active">Active</option>
+                        <option value="finished">Finished</option>
+                        <option value="cancelled">Cancelled</option>
                     </select>
                 </div>
 
                 <div className={styles.filterGroup}>
-                    <label>Игра:</label>
+                    <label>Game:</label>
                     <select 
                         value={gameTypeFilter} 
                         onChange={(e) => setGameTypeFilter(e.target.value as any)}
                         className={styles.filterSelect}
                     >
-                        <option value="all">Все игры</option>
-                        <option value="tic-tac-toe">Крестики-нолики</option>
-                        <option value="checkers">Шашки</option>
-                        <option value="chess">Шахматы</option>
-                        <option value="backgammon">Нарды</option>
+                        <option value="all">All Games</option>
+                        <option value="tic-tac-toe">Tic-Tac-Toe</option>
+                        <option value="checkers">Checkers</option>
+                        <option value="chess">Chess</option>
+                        <option value="backgammon">Backgammon</option>
+                        <option value="durak">Durak</option>
                     </select>
                 </div>
             </div>
 
             {filteredTournaments.length === 0 ? (
                 <div className={styles.emptyState}>
-                    <h3>Турниры не найдены</h3>
-                    <p>Попробуйте изменить фильтры или создать новый турнир</p>
+                    <h3>No tournaments found</h3>
+                    <p>Try changing filters or create a new tournament</p>
                 </div>
             ) : (
                 <div className={styles.tournamentsList}>
@@ -210,19 +212,19 @@ const TournamentsListPage: React.FC = () => {
 
                             <div className={styles.tournamentInfo}>
                                 <div className={styles.infoRow}>
-                                    <span className={styles.label}>Игра:</span>
+                                    <span className={styles.label}>Game:</span>
                                     <span>{gameTypeText[tournament.gameType]}</span>
                                 </div>
                                 <div className={styles.infoRow}>
-                                    <span className={styles.label}>Взнос:</span>
-                                    <span>{tournament.entryFee} монет</span>
+                                    <span className={styles.label}>Entry Fee:</span>
+                                    <span>{tournament.entryFee} coins</span>
                                 </div>
                                 <div className={styles.infoRow}>
-                                    <span className={styles.label}>Призовой фонд:</span>
-                                    <span>{tournament.prizePool} монет</span>
+                                    <span className={styles.label}>Prize Pool:</span>
+                                    <span>{tournament.prizePool} coins</span>
                                 </div>
                                 <div className={styles.infoRow}>
-                                    <span className={styles.label}>Игроки:</span>
+                                    <span className={styles.label}>Players:</span>
                                     <span>
                                         {tournament.players.length}/{tournament.maxPlayers}
                                         <div className={styles.progressBar}>
@@ -251,23 +253,23 @@ const TournamentsListPage: React.FC = () => {
                                                 onClick={() => handleUnregister(tournament._id)}
                                                 className={styles.unregisterButton}
                                             >
-                                                Отменить регистрацию
+                                                Cancel registration
                                             </button>
                                         ) : canPlayerRegister(tournament) ? (
                                             <button 
                                                 onClick={() => handleRegister(tournament._id)}
                                                 className={styles.registerButton}
                                             >
-                                                Зарегистрироваться
+                                                Register
                                             </button>
                                         ) : (
                                             <button 
                                                 disabled 
                                                 className={styles.disabledButton}
                                             >
-                                                {tournament.players.length >= tournament.maxPlayers 
-                                                    ? 'Турнир заполнен' 
-                                                    : 'Недостаточно средств'
+                                                {tournament.players.length >= tournament.maxPlayers
+                                                    ? 'Tournament full'
+                                                    : 'Insufficient funds'
                                                 }
                                             </button>
                                         )}
@@ -278,13 +280,13 @@ const TournamentsListPage: React.FC = () => {
                                     onClick={() => navigate(`/tournament/${tournament._id}`)}
                                     className={styles.viewButton}
                                 >
-                                    Подробнее
+                                    Details
                                 </button>
                             </div>
 
                             {tournament.players.length > 0 && (
                                 <div className={styles.playersList}>
-                                    <h4>Участники:</h4>
+                                    <h4>Participants:</h4>
                                     <div className={styles.players}>
                                         {tournament.players.map((player, index) => (
                                             <span

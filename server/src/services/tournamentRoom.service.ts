@@ -54,12 +54,29 @@ export async function createTournamentRoom(
             username: p.user.username 
         })));
 
+        console.log(`[TournamentRoom] About to create initial state for ${gameType} with players:`, gamePlayersFormat);
+        
         const initialGameState = gameLogic.createInitialState(gamePlayersFormat);
-        console.log(`[TournamentRoom] Initial game state:`, {
+        console.log(`[TournamentRoom] Initial game state created:`, {
             turn: initialGameState.turn,
             gameType,
-            hasBoard: !!initialGameState.board
+            hasBoard: !!initialGameState.board,
+            phase: initialGameState.phase,
+            players: initialGameState.players?.length,
+            gameOver: initialGameState.gameOver
         });
+        
+        if (gameType === 'durak') {
+            console.log(`[TournamentRoom] Durak specific state:`, {
+                trumpSuit: (initialGameState as any).trumpSuit,
+                deckSize: (initialGameState as any).deck?.length,
+                player1HandSize: (initialGameState as any).players?.[0]?.hand?.length,
+                player2HandSize: (initialGameState as any).players?.[1]?.hand?.length,
+                tableSize: (initialGameState as any).table?.length,
+                currentAttacker: (initialGameState as any).currentAttackerIndex,
+                currentDefender: (initialGameState as any).currentDefenderIndex
+            });
+        }
 
         const tournamentRoom = new TournamentRoom({
             tournamentId,
@@ -181,6 +198,26 @@ export async function joinTournamentRoom(
         }
 
         console.log(`[TournamentRoom] Sending game start to player ${playerId}`);
+        console.log(`[TournamentRoom] Game state being sent:`, {
+            gameType: room.gameType,
+            phase: room.gameState?.phase,
+            turn: room.gameState?.turn,
+            gameOver: room.gameState?.gameOver,
+            playersCount: room.players?.length
+        });
+        
+        if (room.gameType === 'durak') {
+            console.log(`[TournamentRoom] Durak game state details:`, {
+                trumpSuit: (room.gameState as any)?.trumpSuit,
+                deckSize: (room.gameState as any)?.deck?.length,
+                tableSize: (room.gameState as any)?.table?.length,
+                currentAttacker: (room.gameState as any)?.currentAttackerIndex,
+                currentDefender: (room.gameState as any)?.currentDefenderIndex,
+                player1HandSize: (room.gameState as any)?.players?.[0]?.hand?.length,
+                player2HandSize: (room.gameState as any)?.players?.[1]?.hand?.length
+            });
+        }
+        
         socket.emit('tournamentGameStart', {
             matchId,
             gameType: room.gameType,

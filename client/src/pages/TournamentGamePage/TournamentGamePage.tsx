@@ -6,6 +6,7 @@ import TicTacToeBoard from '../../components/game/TicTacToeBoard';
 import CheckersBoard from '../../components/game/CheckersBoard';
 import ChessBoard from '../../components/game/ChessBoard';
 import BackgammonBoard from '../../components/game/BackgammonBoard';
+import DurakBoard from '../../components/game/DurakBoard';
 import TournamentExitWarningModal from '../../components/modals/TournamentExitWarningModal';
 import TournamentFloatingCountdown from '../../components/modals/TournamentFloatingCountdown';
 import { useTournamentExitWarning } from '../../hooks/useTournamentExitWarning';
@@ -74,10 +75,11 @@ const TournamentGamePage: React.FC = () => {
     const navigate = useNavigate();
 
     const gameTypeText = {
-        'tic-tac-toe': 'Крестики-нолики',
-        'checkers': 'Шашки',
-        'chess': 'Шахматы',
-        'backgammon': 'Нарды'
+        'tic-tac-toe': 'Tic-Tac-Toe',
+        'checkers': 'Checkers',
+        'chess': 'Chess',
+        'backgammon': 'Backgammon',
+        'durak': 'Durak'
     };
 
     const {
@@ -404,8 +406,19 @@ const TournamentGamePage: React.FC = () => {
                     />
                 );
             
+            case 'durak':
+                return (
+                    <DurakBoard
+                        gameState={gameState}
+                        onMove={handleMove}
+                        isMyTurn={isMyTurn}
+                        isGameFinished={!!gameResult}
+                        myPlayerIndex={myPlayerIndex}
+                    />
+                );
+            
             default:
-                return <div>Неподдерживаемый тип игры: {gameType}</div>;
+                return <div>Unsupported game type: {gameType}</div>;
         }
     };
 
