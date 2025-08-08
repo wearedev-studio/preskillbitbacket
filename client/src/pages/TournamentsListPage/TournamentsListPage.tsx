@@ -10,7 +10,7 @@ const TournamentsListPage: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [filter, setFilter] = useState<'all' | 'waiting' | 'active' | 'finished' | 'cancelled'>('all');
-    const [gameTypeFilter, setGameTypeFilter] = useState<'all' | 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino'>('all');
+    const [gameTypeFilter, setGameTypeFilter] = useState<'all' | 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino' | 'dice'>('all');
     
     const { user } = useAuth();
     const { socket } = useSocket();
@@ -29,7 +29,8 @@ const TournamentsListPage: React.FC = () => {
         'chess': 'Chess',
         'backgammon': 'Backgammon',
         'durak': 'Durak',
-        'domino': 'Domino'
+        'domino': 'Domino',
+        'dice': 'Dice'
     };
 
     useEffect(() => {
@@ -192,6 +193,7 @@ const TournamentsListPage: React.FC = () => {
                         <option value="backgammon">Backgammon</option>
                         <option value="durak">Durak</option>
                         <option value="domino">Domino</option>
+                        <option value="dice">Dice</option>
                     </select>
                 </div>
             </div>

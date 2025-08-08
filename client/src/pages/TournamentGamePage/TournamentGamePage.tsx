@@ -8,6 +8,7 @@ import ChessBoard from '../../components/game/ChessBoard';
 import BackgammonBoard from '../../components/game/BackgammonBoard';
 import DurakBoard from '../../components/game/DurakBoard';
 import DominoBoard from '../../components/game/DominoBoard';
+import DiceBoard from '../../components/game/DiceBoard';
 import TournamentExitWarningModal from '../../components/modals/TournamentExitWarningModal';
 import TournamentFloatingCountdown from '../../components/modals/TournamentFloatingCountdown';
 import { useTournamentExitWarning } from '../../hooks/useTournamentExitWarning';
@@ -81,7 +82,8 @@ const TournamentGamePage: React.FC = () => {
         'chess': 'Chess',
         'backgammon': 'Backgammon',
         'durak': 'Durak',
-        'domino': 'Domino'
+        'domino': 'Domino',
+        'dice': 'Dice'
     };
 
     const {
@@ -422,6 +424,17 @@ const TournamentGamePage: React.FC = () => {
             case 'domino':
                 return (
                     <DominoBoard
+                        gameState={gameState}
+                        onMove={handleMove}
+                        isMyTurn={isMyTurn}
+                        isGameFinished={!!gameResult}
+                        myPlayerIndex={myPlayerIndex}
+                    />
+                );
+            
+            case 'dice':
+                return (
+                    <DiceBoard
                         gameState={gameState}
                         onMove={handleMove}
                         isMyTurn={isMyTurn}

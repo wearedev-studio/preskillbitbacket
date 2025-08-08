@@ -72,6 +72,7 @@ const AdminPage: React.FC = () => {
                                     <option value="backgammon">Backgammon</option>
                                     <option value="durak">Durak</option>
                                     <option value="domino">Domino</option>
+                                    <option value="dice">Dice</option>
                                 </select>
                                 <input type="number" value={tourneyEntryFee} onChange={e => setTourneyEntryFee(Number(e.target.value))} min="0" placeholder="Entry fee" className={styles.formInput} />
                                 <select value={tourneyMaxPlayers} onChange={e => setTourneyMaxPlayers(Number(e.target.value))} className={styles.formSelect}>
@@ -100,6 +101,7 @@ const AdminPage: React.FC = () => {
                                     <option value="backgammon">Backgammon</option>
                                     <option value="durak">Durak</option>
                                     <option value="domino">Domino</option>
+                                    <option value="dice">Dice</option>
                                 </select>
                                 <input type="number" value={lobbyBet} onChange={e => setLobbyBet(Number(e.target.value))} min="1" placeholder="Bet" className={styles.formInput} />
                                 <button type="submit" className={styles.formButton}>Create room</button>

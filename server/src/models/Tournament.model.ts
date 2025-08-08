@@ -24,7 +24,7 @@ export interface ITournamentRound {
 export interface ITournament extends Document {
     _id: Types.ObjectId;
     name: string;
-    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino';
+    gameType: 'tic-tac-toe' | 'checkers' | 'chess' | 'backgammon' | 'durak' | 'domino' | 'dice';
     status: 'WAITING' | 'ACTIVE' | 'FINISHED' | 'CANCELLED';
     entryFee: number;
     prizePool: number;
@@ -75,7 +75,7 @@ const tournamentSchema = new Schema<ITournament>({
     gameType: {
         type: String,
         required: true,
-        enum: ['tic-tac-toe', 'checkers', 'chess', 'backgammon', 'durak', 'domino']
+        enum: ['tic-tac-toe', 'checkers', 'chess', 'backgammon', 'durak', 'domino', 'dice']
     },
     status: {
         type: String,
